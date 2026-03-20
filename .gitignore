@@ -1,0 +1,13 @@
+# Generated/uploaded images (large binary files)
+Generated images/
+Images/
+
+# Grasshopper files (large binary)
+*.gh
+
+# Batch files
+start.bat
+
+# Environment files
+.env*
+!.env.example
