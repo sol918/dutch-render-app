@@ -2,10 +2,10 @@ import { GreyVolumeImage, AvailableWidth, NumberOfHouses } from "@/types";
 
 // Available discrete values in the image library
 export const AVAILABLE_WIDTHS: AvailableWidth[] = [4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0];
-export const AVAILABLE_HOUSES: NumberOfHouses[] = [4, 5, 6, 7, 8];
+export const AVAILABLE_HOUSES: NumberOfHouses[] = [2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-// Generate the complete image library from the naming convention:
-// IDX_{index}_W{width}_H{houses}_DK-{Yes/No}_VP-{Yes/No}.png
+// Images use sequential indices: width → houses [2..10] → crossGables [No,Yes] → stepping [No,Yes]
+// Filename: IDX_{index}_W{width}_H{houses}_DK-{Yes/No}_VP-{Yes/No}.png
 function generateLibrary(): GreyVolumeImage[] {
   const images: GreyVolumeImage[] = [];
   let index = 0;

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-container": "#d5d4d4",
+              "error": "#ba1a1a",
+              "inverse-surface": "#2f3131",
+              "surface-container-low": "#f4f3f3",
+              "on-surface-variant": "#474747",
+              "surface-bright": "#f9f9f9",
+              "on-tertiary-fixed": "#ffffff",
+              "on-tertiary": "#e2e2e2",
+              "on-tertiary-fixed-variant": "#e2e2e2",
+              "tertiary-fixed-dim": "#454747",
+              "on-secondary": "#ffffff",
+              "secondary-fixed-dim": "#acabab",
+              "on-background": "#1a1c1c",
+              "tertiary-fixed": "#5d5f5f",
+              "on-primary-container": "#ffffff",
+              "surface": "#f9f9f9",
+              "on-tertiary-container": "#ffffff",
+              "surface-variant": "#e2e2e2",
+              "error-container": "#ffdad6",
+              "inverse-on-surface": "#f1f1f1",
+              "inverse-primary": "#c6c6c6",
+              "surface-container-high": "#e8e8e8",
+              "tertiary-container": "#737575",
+              "outline-variant": "#c6c6c6",
+              "on-surface": "#1a1c1c",
+              "outline": "#777777",
+              "on-primary": "#e2e2e2",
+              "surface-tint": "#5e5e5e",
+              "secondary-fixed": "#c7c6c6",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary-fixed-variant": "#3b3b3c",
+              "on-secondary-container": "#1b1c1c",
+              "tertiary": "#3a3c3c",
+              "on-error": "#ffffff",
+              "surface-dim": "#dadada",
+              "on-secondary-fixed": "#1b1c1c",
+              "surface-container": "#eeeeee",
+              "background": "#f9f9f9",
+              "on-error-container": "#410002",
+              "on-primary-fixed": "#ffffff",
+              "primary-fixed-dim": "#474747",
+              "primary-container": "#3b3b3b",
+              "primary": "#000000",
+              "secondary": "#5e5e5e",
+              "surface-container-highest": "#e2e2e2",
+              "primary-fixed": "#5e5e5e",
+              "on-primary-fixed-variant": "#e2e2e2"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; background-color: #f9f9f9; }
+        .ghost-border { border: 1px solid rgba(198, 198, 198, 0.2); }
+        .tight-heading { letter-spacing: -0.04em; line-height: 0.9; }
+        .spec-label { letter-spacing: 0.1em; font-size: 0.6875rem; }
+    </style>
+</head>
+<body class="text-on-background antialiased">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl border-b border-black/10">
+<div class="flex justify-between items-center w-full px-8 py-6 max-w-[1920px] mx-auto">
+<div class="text-lg font-black tracking-tighter text-black">SUSTAINER VLAKWERK</div>
+<div class="hidden md:flex gap-8">
+<a class="font-['Inter'] tracking-tighter font-bold uppercase text-[0.875rem] text-black/40 hover:text-black transition-colors duration-300" href="#">Product</a>
+<a class="font-['Inter'] tracking-tighter font-bold uppercase text-[0.875rem] text-black/40 hover:text-black transition-colors duration-300" href="#">Precision</a>
+<a class="font-['Inter'] tracking-tighter font-bold uppercase text-[0.875rem] text-black border-b border-black pb-1" href="#">TCO &amp; GO</a>
+<a class="font-['Inter'] tracking-tighter font-bold uppercase text-[0.875rem] text-black/40 hover:text-black transition-colors duration-300" href="#">Partnership</a>
+<a class="font-['Inter'] tracking-tighter font-bold uppercase text-[0.875rem] text-black/40 hover:text-black transition-colors duration-300" href="#">Contact</a>
+</div>
+</div>
+</nav>
+<!-- SideNavBar (Technical Specs Panel) -->
+<aside class="fixed right-0 h-full w-64 bg-surface-container-low hidden xl:flex flex-col pt-24 px-6 z-40">
+<div class="mb-12">
+<h3 class="font-['Inter'] text-[0.6875rem] tracking-[0.1em] uppercase font-bold text-black mb-1">TECHNICAL SPECS</h3>
+<p class="font-['Inter'] text-[0.6875rem] tracking-[0.1em] uppercase font-medium text-black/50">Vlakwerk Precision Engine</p>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3 p-4 bg-white text-black transition-transform active:translate-x-1">
+<span class="material-symbols-outlined text-sm" data-icon="architecture">architecture</span>
+<span class="font-['Inter'] text-[0.6875rem] tracking-[0.1em] uppercase font-medium">LVL 40mm</span>
+</div>
+<div class="flex items-center gap-3 p-4 text-black/50 hover:bg-zinc-200 transition-transform">
+<span class="material-symbols-outlined text-sm" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="font-['Inter'] text-[0.6875rem] tracking-[0.1em] uppercase font-medium">CNC-04</span>
+</div>
+<div class="flex items-center gap-3 p-4 text-black/50 hover:bg-zinc-200 transition-transform">
+<span class="material-symbols-outlined text-sm" data-icon="straighten">straighten</span>
+<span class="font-['Inter'] text-[0.6875rem] tracking-[0.1em] uppercase font-medium">Tolerance &lt;0.1mm</span>
+</div>
+<div class="flex items-center gap-3 p-4 text-black/50 hover:bg-zinc-200 transition-transform">
+<span class="material-symbols-outlined text-sm" data-icon="verified">verified</span>
+<span class="font-['Inter'] text-[0.6875rem] tracking-[0.1em] uppercase font-medium">ISO-9001</span>
+</div>
+</div>
+</aside>
+<main class="pt-32 xl:pr-64">
+<!-- Hero Section -->
+<section class="px-8 mb-32 max-w-7xl">
+<div class="spec-label uppercase text-black/40 mb-6">Value Proposition — Financial &amp; Spatial</div>
+<h1 class="text-[clamp(3.5rem,8vw,6rem)] font-black tight-heading text-black mb-12">
+                Predictability<br/>and Margin.
+            </h1>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-end">
+<p class="text-lg text-black/70 leading-relaxed max-w-lg">
+                    Sustainer Vlakwerk shifts the paradigm from material cost to project performance. By integrating precision CNC-milling with high-performance LVL, we unlock hidden margins through area optimization and risk elimination.
+                </p>
+<div class="flex gap-4">
+<button class="bg-black text-white px-8 py-4 font-bold uppercase text-xs tracking-widest hover:bg-primary-container transition-colors">Download TCO Whitepaper</button>
+<button class="ghost-border border-black text-black px-8 py-4 font-bold uppercase text-xs tracking-widest hover:bg-black hover:text-white transition-colors">Request GO-Audit</button>
+</div>
+</div>
+</section>
+<!-- Wkb Section -->
+<section class="bg-surface-container-low py-32 px-8">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-16">
+<div class="lg:col-span-1">
+<span class="inline-block bg-black text-white px-3 py-1 text-[10px] font-bold tracking-[0.2em] uppercase mb-8">System Module 01</span>
+<h2 class="text-4xl font-black tight-heading mb-6">Wkb-Risicoreductie</h2>
+<p class="text-black/60 body-md mb-8">
+                            Wet Kwaliteitsborging (Wkb) demands absolute proof of quality. Our CNC-driven manufacturing ensures that the 'as-built' matches the 'as-designed' with sub-millimeter precision.
+                        </p>
+<ul class="space-y-6">
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="check_circle">check_circle</span>
+<div>
+<span class="block font-bold text-xs uppercase tracking-wider mb-1">Zero Failure Costs</span>
+<span class="text-sm text-black/50">Eliminating rework and dimensional errors on-site.</span>
+</div>
+</li>
+<li class="flex items-start gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="check_circle">check_circle</span>
+<div>
+<span class="block font-bold text-xs uppercase tracking-wider mb-1">Automated Documentation</span>
+<span class="text-sm text-black/50">Every component is tracked, measured, and verified for compliance.</span>
+</div>
+</li>
+</ul>
+</div>
+<div class="lg:col-span-2 relative bg-surface p-12 ghost-border">
+<!-- Minimalist Data Vis -->
+<div class="h-64 w-full flex items-end gap-4">
+<div class="flex-1 flex flex-col items-center gap-4">
+<div class="w-full bg-secondary-container h-48 relative">
+<div class="absolute inset-x-0 bottom-0 bg-error/20 h-16 flex items-center justify-center text-[10px] font-bold uppercase text-error">Failure Risk</div>
+</div>
+<span class="spec-label">Traditional Build</span>
+</div>
+<div class="flex-1 flex flex-col items-center gap-4">
+<div class="w-full bg-black h-48 relative">
+<div class="absolute inset-x-0 bottom-0 bg-white/10 h-2 flex items-center justify-center"></div>
+</div>
+<span class="spec-label">Vlakwerk Method</span>
+</div>
+</div>
+<div class="mt-12 pt-12 border-t border-black/5">
+<div class="flex justify-between items-baseline">
+<span class="text-5xl font-black">-12%</span>
+<span class="spec-label">Total Risk Exposure Reduction</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Extra GO Section -->
+<section class="py-32 px-8 max-w-7xl mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+<div class="order-2 lg:order-1">
+<div class="relative aspect-square bg-surface-container-highest overflow-hidden p-16">
+<div class="absolute inset-0 flex items-center justify-center opacity-10">
+<div class="w-[80%] h-[80%] border-[40px] border-black"></div>
+</div>
+<div class="relative z-10 h-full w-full border border-black/20 flex items-center justify-center flex-col">
+<div class="text-[8rem] font-black leading-none">+5%</div>
+<div class="spec-label font-bold text-black mt-4 tracking-[0.3em]">Usable Area (GO)</div>
+</div>
+<img class="absolute inset-0 object-cover opacity-20 grayscale" data-alt="minimalist architectural drawing of building floor plan with thin walls and clean lines on white vellum" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZr5oJ0RsHdguv6kkqYVZbhzhcXG8DgxJ263z0sdrHesx0QSEulLSJ4zXZBxjZPCclzWb45pfYhWSpf2TN5Pa_4-63EVtIPKYREPIv5QFAL8qWDRDJWNhd3_zNjXwvC5oE6IaZF77j6YXzKArsufBeH8ChiUz3e5wcJFMcuKWzVvWXcfmCwuGn4j7Vg02yv2vJ_lShm4b6t2c_U5KGWSA5_JstYeJN6461mC3hQbPilJF7QZMX3jkXknOaLIT6iMeTnlSPJ9H9vWI"/>
+</div>
+</div>
+<div class="order-1 lg:order-2">
+<span class="inline-block bg-black text-white px-3 py-1 text-[10px] font-bold tracking-[0.2em] uppercase mb-8">System Module 02</span>
+<h2 class="text-4xl font-black tight-heading mb-6">Extra GO (Usable Area)</h2>
+<p class="text-lg text-black/70 mb-8">
+                        Wall thickness is the enemy of saleable area. By utilizing high-strength, thin LVL wall systems, we reduce wall depth by up to 12cm without sacrificing structural integrity or acoustic performance.
+                    </p>
+<div class="space-y-12">
+<div class="flex justify-between border-b border-black/10 pb-4">
+<span class="spec-label font-bold">Standard Wall</span>
+<span class="spec-label">280mm - 320mm</span>
+</div>
+<div class="flex justify-between border-b border-black pb-4">
+<span class="spec-label font-bold text-black">Vlakwerk Slim-Wall</span>
+<span class="spec-label text-black">160mm - 180mm</span>
+</div>
+</div>
+<p class="mt-8 text-sm text-black/50 italic">
+                        *On a typical 100-apartment development, this yields approximately 120m² of additional sellable floor area.
+                    </p>
+</div>
+</div>
+</section>
+<!-- TCO Section -->
+<section class="bg-black text-white py-32 px-8">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col lg:flex-row justify-between items-start gap-16">
+<div class="lg:max-w-xl">
+<span class="inline-block bg-white text-black px-3 py-1 text-[10px] font-bold tracking-[0.2em] uppercase mb-8">System Module 03</span>
+<h2 class="text-5xl font-black tight-heading mb-8 text-white">Total Concept Budgeting</h2>
+<p class="text-white/60 body-md mb-12">
+                            Stop measuring by m² price and start measuring by Total Cost of Ownership (TCO). Vlakwerk integrates logistics, assembly speed, and maintenance into a single predictable budget.
+                        </p>
+<div class="grid grid-cols-2 gap-8">
+<div class="p-8 bg-zinc-900 ghost-border border-white/10">
+<div class="text-3xl font-black mb-2">3x</div>
+<div class="spec-label opacity-60">Faster Assembly</div>
+</div>
+<div class="p-8 bg-zinc-900 ghost-border border-white/10">
+<div class="text-3xl font-black mb-2">0%</div>
+<div class="spec-label opacity-60">Waste on Site</div>
+</div>
+</div>
+</div>
+<div class="w-full lg:w-1/2 p-12 bg-zinc-900 border border-white/5 relative">
+<div class="absolute top-0 right-0 p-4">
+<span class="material-symbols-outlined text-white/20" data-icon="analytics">analytics</span>
+</div>
+<h4 class="spec-label mb-12 text-white/40">TCO Comparison Matrix</h4>
+<div class="space-y-8">
+<div>
+<div class="flex justify-between mb-2">
+<span class="text-[10px] uppercase tracking-widest">Traditional Construction</span>
+<span class="text-[10px] uppercase tracking-widest">Variable Costs</span>
+</div>
+<div class="w-full h-2 bg-white/10">
+<div class="h-full bg-white/40 w-full"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between mb-2">
+<span class="text-[10px] uppercase tracking-widest text-white">Vlakwerk Precision</span>
+<span class="text-[10px] uppercase tracking-widest text-white">Fixed Outcome</span>
+</div>
+<div class="w-full h-2 bg-white/10">
+<div class="h-full bg-white w-[85%]"></div>
+</div>
+</div>
+</div>
+<div class="mt-16 flex gap-8">
+<div class="flex-1">
+<div class="text-xs font-bold uppercase mb-2">Predictability</div>
+<p class="text-[10px] text-white/40">98.5% cost certainty from final design stage.</p>
+</div>
+<div class="flex-1">
+<div class="text-xs font-bold uppercase mb-2">Sustainability</div>
+<p class="text-[10px] text-white/40">Circular LVL cores with residual value.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Gallery Style -->
+<section class="py-32 px-8 text-center max-w-3xl mx-auto">
+<h3 class="text-3xl font-black tight-heading mb-8 italic">"Precision is the foundation of profit."</h3>
+<p class="text-black/50 mb-12">Connect with our technical advisors to run a TCO comparison for your next development.</p>
+<div class="flex flex-col md:flex-row gap-4 justify-center">
+<button class="bg-black text-white px-12 py-5 font-bold uppercase text-xs tracking-[0.2em]">Contact Engineering</button>
+<button class="bg-surface-container-highest text-black px-12 py-5 font-bold uppercase text-xs tracking-[0.2em]">View Projects</button>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full border-t border-black/10 bg-[#F9F9F9]">
+<div class="w-full px-8 py-12 flex flex-col md:flex-row justify-between items-start gap-8 max-w-[1920px] mx-auto">
+<div>
+<div class="text-sm font-bold tracking-tighter mb-4">SUSTAINER VLAKWERK</div>
+<div class="font-['Inter'] text-[0.6875rem] tracking-[0.05em] uppercase text-black/40">
+                        © 2024 SUSTAINER VLAKWERK. ALL RIGHTS RESERVED.
+                    </div>
+</div>
+<div class="flex flex-wrap gap-8">
+<a class="font-['Inter'] text-[0.6875rem] tracking-[0.05em] uppercase text-black/40 hover:text-black transition-colors" href="#">Legal</a>
+<a class="font-['Inter'] text-[0.6875rem] tracking-[0.05em] uppercase text-black/40 hover:text-black transition-colors" href="#">Privacy</a>
+<a class="font-['Inter'] text-[0.6875rem] tracking-[0.05em] uppercase text-black/40 hover:text-black transition-colors" href="#">Sustainability</a>
+<a class="font-['Inter'] text-[0.6875rem] tracking-[0.05em] uppercase text-black/40 hover:text-black transition-colors underline" href="#">Technical Documentation</a>
+</div>
+</div>
+</footer>
+</main>
+</body></html>

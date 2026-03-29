@@ -69,16 +69,13 @@ function generateRandomConfig(): RenderConfig {
 
   const gutters: GutterType[] = ["overstek", "mastgoot", "verholen-goot"];
   const allFeatures: OptionalFeature[] = ["pergola", "dakkapel", "extra-ramen-kopgevel", "luifel", "franse-balkons", "erker", "zonnepanelen", "afwijkende-voordeuraccenten"];
-  const houses: NumberOfHouses[] = [4, 5, 6, 7, 8];
+  const houses: NumberOfHouses[] = [2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   const style = weightedPick<StylePreset>([
-    ["jaren-30", 15],
-    ["moderne-stadswoning", 10],
+    ["jaren-30", 25],
+    ["modern", 25],
     ["landelijk", 25],
     ["biobased", 25],
-    ["oud-hollands", 8],
-    ["industrieel", 7],
-    ["haags", 10],
   ]);
 
   const floorLine = weightedPick<FloorLineTreatment>([
@@ -106,7 +103,7 @@ function generateRandomConfig(): RenderConfig {
   ];
   const woodType = timberStyles.has(style) ? pick(allWoodTypes) : undefined;
 
-  const brickStyleSet = new Set(["jaren-30", "moderne-stadswoning", "oud-hollands", "industrieel", "haags"]);
+  const brickStyleSet = new Set(["jaren-30", "modern"]);
   const allBrickTypes: BrickType[] = [
     "waals-rood", "ijsselsteen-geel", "handvorm-bruin", "strengpers-grijs",
     "langformaat-antraciet", "geglazuurd-donker", "lichte-baksteen",

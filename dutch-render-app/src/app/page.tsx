@@ -2,10 +2,12 @@
 
 import { useState, useMemo, useCallback, useRef, useEffect } from "react";
 import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 import { ConfigPanel } from "@/components/ConfigPanel";
 import { PreviewArea } from "@/components/PreviewArea";
 import { VariantsGallery, configDistance } from "@/components/VariantsGallery";
 import { RenderConfig, GenerateResponse, GeneratedVariant, RenderQuality, RenderEngine, StylePreset, GutterType, FloorLineTreatment, OptionalFeature, NumberOfHouses, WoodType, BrickType } from "@/types";
+import { BRICK_CONFIGS } from "@/config/bricks";
 
 const DEFAULT_CONFIG: RenderConfig = {
   geometry: {
@@ -229,6 +231,60 @@ export default function Home() {
 
   const [batchProgress, setBatchProgress] = useState<{ current: number; total: number } | null>(null);
   const [galleryExpanded, setGalleryExpanded] = useState(false);
+  const [isRefining, setIsRefining] = useState(false);
+
+  const handleRefine = useCallback(async () => {
+    if (!selectedVariant?.config || isRefining || isGenerating) return;
+
+    setIsRefining(true);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/refine", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          config: selectedVariant.config,
+          renderImageUrl: selectedVariant.imageUrl,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success && data.imageUrl) {
+        // Save the refined image to disk, reusing the same id
+        const variantId = selectedVariant.id;
+        const saved = await fetch("/api/renders", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id: variantId,
+            imageUrl: data.imageUrl,
+            config: selectedVariant.config,
+          }),
+        }).then((r) => r.json()).catch(() => null);
+
+        const newUrl = saved?.imageFilename
+          ? `/api/generated-image/${saved.imageFilename}`
+          : data.imageUrl;
+
+        // Replace the existing variant in-place
+        setAllVariants((prev) =>
+          prev.map((v) =>
+            v.id === variantId
+              ? { ...v, imageUrl: `${newUrl}?t=${Date.now()}` }
+              : v
+          )
+        );
+      } else {
+        setError(data.error ?? "Verfijning mislukt");
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Verbindingsfout");
+    } finally {
+      setIsRefining(false);
+    }
+  }, [selectedVariant, isRefining, isGenerating]);
 
   const generateRandomConfig = useCallback((): RenderConfig => {
     // Weighted random picker
@@ -251,17 +307,14 @@ export default function Home() {
       ["expliciet-gemaakt", 10],
     ];
     const allFeatures: OptionalFeature[] = ["pergola", "dakkapel", "extra-ramen-kopgevel", "luifel", "franse-balkons", "erker", "zonnepanelen", "afwijkende-voordeuraccenten"];
-    const houses: NumberOfHouses[] = [4, 5, 6, 7, 8];
+    const houses: NumberOfHouses[] = [2, 3, 4, 5, 6, 7, 8, 9, 10];
 
     // Weighted style distribution
     const style = weightedPick<StylePreset>([
-      ["jaren-30", 15],
-      ["moderne-stadswoning", 10],
+      ["jaren-30", 25],
+      ["modern", 25],
       ["landelijk", 25],
       ["biobased", 25],
-      ["oud-hollands", 8],
-      ["industrieel", 7],
-      ["haags", 10],
     ]);
 
     // Weighted feature count: 0=20%, 1=30%, 2=30%, 3=20%
@@ -287,11 +340,8 @@ export default function Home() {
     const woodType = timberStyles.has(style) ? pick(allWoodTypes) : undefined;
 
     // Random brick type for brick styles
-    const brickStyleSet = new Set(["jaren-30", "moderne-stadswoning", "oud-hollands", "industrieel", "haags"]);
-    const allBrickTypes: BrickType[] = [
-      "waals-rood", "ijsselsteen-geel", "handvorm-bruin", "strengpers-grijs",
-      "langformaat-antraciet", "geglazuurd-donker", "lichte-baksteen",
-    ];
+    const brickStyleSet = new Set(["jaren-30", "modern"]);
+    const allBrickTypes: BrickType[] = Object.keys(BRICK_CONFIGS) as BrickType[];
     const brickType = brickStyleSet.has(style) ? pick(allBrickTypes) : undefined;
 
     return {
@@ -384,7 +434,7 @@ export default function Home() {
   }, [selectedVariantId]);
 
   return (
-    <div className="h-screen flex flex-col bg-[#0a0a0a] overflow-hidden">
+    <div className="h-screen flex flex-col bg-[#F9F9F9] overflow-hidden">
       <Header />
 
       <div className="flex-1 flex overflow-hidden">
@@ -405,7 +455,9 @@ export default function Home() {
             <PreviewArea
               selectedVariant={selectedVariant}
               isGenerating={isGenerating}
+              isRefining={isRefining}
               error={error}
+              onRefine={handleRefine}
             />
           )}
 
@@ -420,6 +472,8 @@ export default function Home() {
           />
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }

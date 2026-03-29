@@ -1,32 +1,18 @@
 "use client";
 
-import { motion } from "framer-motion";
-
 export function Header() {
   return (
-    <motion.header
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.6 }}
-      className="h-14 border-b border-[#1a1a1a] bg-[#0a0a0a]/90 backdrop-blur-md px-6 flex items-center shrink-0"
-    >
-      <div className="flex items-center gap-2.5">
-        <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center">
-          <span className="text-white text-xs font-bold">S</span>
+    <nav className="w-full px-8 md:px-12 h-14 flex items-center justify-between border-b border-black/5 shrink-0">
+      <span className="text-sm font-black tracking-tighter uppercase">VLAKWERK</span>
+      <div className="flex items-center gap-6">
+        <div className="hidden md:flex items-center gap-6">
+          <a href="#" className="label text-[10px] text-[#c6c6c6] hover:text-[#1a1c1c] transition-colors">Configurator</a>
+          <a href="#" className="label text-[10px] text-[#c6c6c6] hover:text-[#1a1c1c] transition-colors">Planning</a>
+          <a href="#" className="label text-[10px] text-[#1a1c1c] border-b border-black pb-0.5">Visualizer</a>
+          <a href="#" className="label text-[10px] text-[#c6c6c6] hover:text-[#1a1c1c] transition-colors">Portal</a>
         </div>
-        <div className="flex items-baseline gap-1.5">
-          <span className="text-sm font-semibold text-white/90 tracking-tight">
-            Sustainer
-          </span>
-          <span className="text-sm text-white/40 font-light">/</span>
-          <span className="text-sm font-semibold text-white/90 tracking-tight">
-            VORM
-          </span>
-          <span className="text-sm text-white/40 ml-1">
-            rijwoning
-          </span>
-        </div>
+        <span className="material-symbols-outlined text-[#474747] cursor-pointer hover:text-black transition-colors">person</span>
       </div>
-    </motion.header>
+    </nav>
   );
 }

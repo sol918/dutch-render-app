@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Lock, Info } from "lucide-react";
 import { GreyVolumeImage } from "@/types";
 
@@ -25,33 +24,29 @@ export function ConstraintsSummary({
   const widthDiff = Math.abs(requestedWidth - baseImage.width);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: -5 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="bg-stone-50 border border-stone-200 rounded-xl px-4 py-3"
-    >
+    <div className="bg-white border border-black/5 px-4 py-3">
       <div className="flex items-center gap-2 mb-2">
-        <Lock className="w-3.5 h-3.5 text-stone-500" />
-        <span className="text-xs font-semibold text-stone-500 uppercase tracking-wider">
+        <Lock className="w-3.5 h-3.5 text-black/30" />
+        <span className="text-[0.6875rem] font-bold text-black/40 uppercase tracking-[0.1em]">
           Vergrendelde geometrie
         </span>
       </div>
       <div className="flex gap-4">
         {constraints.map((c) => (
           <div key={c.label} className="text-center">
-            <div className="text-xs text-stone-400">{c.label}</div>
-            <div className="text-sm font-semibold text-stone-700">{c.value}</div>
+            <div className="text-[0.6875rem] text-black/30 uppercase tracking-[0.05em]">{c.label}</div>
+            <div className="text-[0.875rem] font-bold text-black/70">{c.value}</div>
           </div>
         ))}
       </div>
       {widthDiff > 0.01 && (
-        <div className="flex items-center gap-1.5 mt-2 text-xs text-amber-600">
+        <div className="flex items-center gap-1.5 mt-2 text-[0.75rem] text-black/40">
           <Info className="w-3 h-3" />
           <span>
-            Aangevraagd {requestedWidth.toFixed(1)}m, dichtstbijzijnde beschikbare breedte: {baseImage.width.toFixed(1)}m
+            Aangevraagd {requestedWidth.toFixed(1)}m, dichtstbijzijnde: {baseImage.width.toFixed(1)}m
           </span>
         </div>
       )}
-    </motion.div>
+    </div>
   );
 }

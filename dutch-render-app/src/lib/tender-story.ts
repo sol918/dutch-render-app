@@ -1,13 +1,10 @@
 import { RenderConfig } from "@/types";
 
 const STYLE_NAMES: Record<string, string> = {
-  "jaren-30": "Jaren 30-stijl",
-  "moderne-stadswoning": "Moderne Stadswoning",
+  "jaren-30": "Jaren '30",
+  modern: "Modern",
   landelijk: "Landelijk",
   biobased: "Biobased",
-  "oud-hollands": "Oud-Hollands",
-  industrieel: "Industrieel",
-  haags: "Haagse Stijl",
 };
 
 const BRICK_NAMES: Record<string, string> = {
@@ -52,22 +49,16 @@ const FEATURE_DESCRIPTIONS: Record<string, string> = {
 // --- Style-specific living experience descriptions ---
 
 const STYLE_LIVING: Record<string, string> = {
-  "jaren-30": `De architectuur ademt de warmte en het karakter van de jaren dertig, maar dan in een eigentijdse interpretatie. Het zijn woningen met een ziel,de genereuze verhoudingen, de zorgvuldige detaillering rond ramen en entrees, de warme baksteentinten die veranderen met het licht van de dag. Wie hier binnenkomt, voelt meteen de rust van een huis dat doordacht is ontworpen: hoge plafonds, diepe dagkanten die het licht zacht naar binnen leiden, en een vloeiende overgang van de intieme voortuin naar de huiskamer.`,
+  "jaren-30": `De architectuur ademt de warmte en het karakter van de jaren dertig, maar dan in een eigentijdse interpretatie. Het zijn woningen met een ziel, de genereuze verhoudingen, de zorgvuldige detaillering rond ramen en entrees, de warme baksteentinten die veranderen met het licht van de dag. Wie hier binnenkomt, voelt meteen de rust van een huis dat doordacht is ontworpen: hoge plafonds, diepe dagkanten die het licht zacht naar binnen leiden, en een vloeiende overgang van de intieme voortuin naar de huiskamer.`,
 
-  "moderne-stadswoning": `Deze woningen zijn ontworpen voor mensen die van de stad houden,van de energie, de nabijheid, het gemak,maar die thuiskomen in een plek die stilte en ruimte biedt. De strakke, eigentijdse baksteengevels geven het blok een zelfverzekerde uitstraling zonder te schreeuwen. Binnen vertaalt die kalmte zich in heldere, lichte ruimtes met slanke kozijnprofielen die het daglicht maximaal binnenlaten. Het is wonen met de luxe van eenvoud: zuivere lijnen, eerlijke materialen, en precies genoeg detail om het bijzonder te maken.`,
+  modern: `Deze woningen zijn ontworpen voor mensen die van eigentijds wonen houden — van strakke lijnen, eerlijke materialen en een zelfverzekerde uitstraling. De baksteengevels geven het blok een robuuste maar verfijnde presentie. Binnen vertaalt die kalmte zich in heldere, lichte ruimtes met slanke kozijnprofielen die het daglicht maximaal binnenlaten. Het is wonen met de luxe van eenvoud: zuivere lijnen, eerlijke materialen, en precies genoeg karakter om het bijzonder te maken.`,
 
-  landelijk: `Hier woon je niet zomaar in een huis,je woont in hout. En dat voel je. De geur van natuurlijk hout bij de voordeur, de zachte warmte die de gevelbekleding uitstraalt als de zon erop valt, het subtiele spel van schaduw tussen de latten dat met de seizoenen verandert. Een houten woning leeft met je mee. Het materiaal ademt, dempt geluid op een natuurlijke manier, en creëert een binnenklimaat dat zacht aanvoelt,geen droge verwarmingslucht, maar een evenwichtige, behaaglijke warmte. De landelijke architectuur versterkt dat gevoel: genereuze dakoverstekken, een ontspannen verhouding tot de tuin, en een materialiteit die eerlijk en warm is. Dit is geen huis dat indruk wil maken,het is een huis dat je verwelkomt.`,
+  landelijk: `Hier woon je niet zomaar in een huis — je woont in hout. En dat voel je. De geur van natuurlijk hout bij de voordeur, de zachte warmte die de gevelbekleding uitstraalt als de zon erop valt, het subtiele spel van schaduw tussen de latten dat met de seizoenen verandert. Een houten woning leeft met je mee. Het materiaal ademt, dempt geluid op een natuurlijke manier, en creëert een binnenklimaat dat zacht aanvoelt — geen droge verwarmingslucht, maar een evenwichtige, behaaglijke warmte. De landelijke architectuur versterkt dat gevoel: genereuze dakoverstekken, een ontspannen verhouding tot de tuin, en een materialiteit die eerlijk en warm is. Dit is geen huis dat indruk wil maken — het is een huis dat je verwelkomt.`,
 
-  biobased: `Wonen in een biobased woning is een bewuste keuze, maar het voelt niet als een compromis,het voelt als een voorrecht. De houten constructie en gevelbekleding geven het huis een warmte die je direct merkt als je binnenstapt. Hout reguleert vocht op een natuurlijke manier, dempt geluid, en voelt aangenaam aan,het is een materiaal dat je huis zachter maakt. In combinatie met het groene sedumdak ontstaat een woning die letterlijk leeft: het dak bloeit in het voorjaar, vangt regenwater op, en isoleert mee met de seizoenen. Je woont hier in een huis dat niet alleen weinig van de aarde vraagt, maar er actief aan bijdraagt. De CO₂ die in de houtconstructie is opgeslagen, maakt van elke woning een klein stukje klimaatoplossing.`,
-
-  "oud-hollands": `Er is iets geruststellends aan een huis dat voortbouwt op eeuwen Nederlandse bouwtradite. De warme bakstenen, de vertrouwde verhoudingen, het vakmanschap in het metselwerk,het zijn woningen die er vanaf dag één uitzien alsof ze er altijd al stonden. Maar achter die vertrouwde verschijning is alles nieuw, doordacht, en toekomstbestendig. Binnen vind je ruimtes die profiteren van genereuze verdiepingshoogtes en een zorgvuldige daglichtstudie. De traditionele detaillering rondom ramen en deuren geeft elke kamer een eigen karakter, een eigen lichtval. Hier wonen voelt als thuiskomen in de beste zin van het woord.`,
-
-  industrieel: `Deze woningen maken een statement,en dat is precies de bedoeling. De donkere, grafische gevels met hun stoere materialiteit geven het blok een eigenheid die je niet snel vergeet. Maar achter die robuuste buitenkant schuilt een verrassend warm interieur. De contrasten zijn bewust: waar de buitenkant donker en assertief is, zijn de binnenruimtes licht en ruim, met grote raamopeningen die het contrast tussen binnen en buiten tot een kwaliteit maken. Het is wonen voor mensen die karakter waarderen,in hun buurt, in hun straat, en in hun eigen voordeur.`,
-
-  haags: `De Haagse School-architectuur is misschien wel de meest verfijnde uitdrukking van de Nederlandse baksteentraditie. Het zijn gevels waar je naar kunt blijven kijken,het spel van gemetselde patronen, de subtiele schaduwen van uitkragende baksteenlagen, de sculpturale kwaliteit van de dakrand. Deze woningen stralen een stille waardigheid uit die je in weinig nieuwbouw terugvindt. Binnen vertaalt die rijkdom zich in een gevoel van geborgenheid: de massieve baksteengevels dempen geluid en houden warmte vast, de diepe dagkanten rondom de ramen geven elke kamer diepte en karakter. Het is wonen in architectuur die zichzelf serieus neemt,en die daardoor ook jou serieus neemt.`,
+  biobased: `Wonen in een biobased woning is een bewuste keuze, maar het voelt niet als een compromis — het voelt als een voorrecht. De houten constructie en gevelbekleding geven het huis een warmte die je direct merkt als je binnenstapt. Hout reguleert vocht op een natuurlijke manier, dempt geluid, en voelt aangenaam aan — het is een materiaal dat je huis zachter maakt. In combinatie met het groene sedumdak ontstaat een woning die letterlijk leeft: het dak bloeit in het voorjaar, vangt regenwater op, en isoleert mee met de seizoenen. Je woont hier in een huis dat niet alleen weinig van de aarde vraagt, maar er actief aan bijdraagt. De CO₂ die in de houtconstructie is opgeslagen, maakt van elke woning een klein stukje klimaatoplossing.`,
 };
 
-const WOOD_LIVING = `Wonen in een houten gebouw is wezenlijk anders dan in steen. Hout is een levend materiaal,het reguleert vocht, absorbeert geluid, en creëert een binnenklimaat dat je niet kunt nabootsen met installaties. De akoestiek is zachter, de lucht voelt frisser, en de temperatuur is stabieler. Veel bewoners van houtbouw beschrijven het als een soort rust die je pas opvalt als je eraan gewend bent en ergens anders slaapt. Het is de kwaliteit van het onzichtbare,geen gadgets, geen techniek die je hoort, gewoon een huis dat goed voelt.`;
+const WOOD_LIVING = `Wonen in een houten gebouw is wezenlijk anders dan in steen. Hout is een levend materiaal — het reguleert vocht, absorbeert geluid, en creëert een binnenklimaat dat je niet kunt nabootsen met installaties. De akoestiek is zachter, de lucht voelt frisser, en de temperatuur is stabieler. Veel bewoners van houtbouw beschrijven het als een soort rust die je pas opvalt als je eraan gewend bent en ergens anders slaapt. Het is de kwaliteit van het onzichtbare — geen gadgets, geen techniek die je hoort, gewoon een huis dat goed voelt.`;
 
 function materialParagraph(config: RenderConfig): string {
   const timberStyles = new Set(["landelijk", "biobased"]);
@@ -106,12 +97,12 @@ function sustainabilityParagraph(config: RenderConfig): string {
 
   const intro = `Achter de zorgvuldige verschijning gaat een ambitieus duurzaamheidsconcept schuil. De woningen zijn volledig elektrisch en worden ontwikkeld als passiefhuis. Dat betekent in de praktijk: een uitzonderlijk goed geïsoleerde schil, hoogwaardig drievoudig glas, en koudebrugvrije details door de hele constructie. De aansluiting tussen gevel, dak, kozijn en vloer is tot in detail doorgewerkt om warmteverlies te minimaliseren.`;
 
-  const airtightness = `De luchtdichtheid van de woningen wordt tot op het hoogste niveau geborgd en na oplevering getest. Dat is geen formaliteit,het is de kern van het concept. Een luchtdichte schil voorkomt tocht, vochtproblemen en onnodig energieverlies. In combinatie met een gebalanceerd ventilatiesysteem met warmteterugwinning ademt de woning gecontroleerd: altijd verse lucht, altijd de juiste temperatuur, zonder dat je er iets voor hoeft te doen.`;
+  const airtightness = `De luchtdichtheid van de woningen wordt tot op het hoogste niveau geborgd en na oplevering getest. Dat is geen formaliteit — het is de kern van het concept. Een luchtdichte schil voorkomt tocht, vochtproblemen en onnodig energieverlies. In combinatie met een gebalanceerd ventilatiesysteem met warmteterugwinning ademt de woning gecontroleerd: altijd verse lucht, altijd de juiste temperatuur, zonder dat je er iets voor hoeft te doen.`;
 
-  const noHeatpump = `En hier zit misschien wel het mooiste van het passiefhuisconcept: er is geen warmtepomp nodig. De woning is zó goed geïsoleerd en luchtdicht dat de warmte van bewoners, apparaten en de zon vrijwel volstaat om het huis op temperatuur te houden. Geen buitenunit in de tuin, geen compressor die aanslaat, geen onderhoudscontract. De energierekening is minimaal, en het enige dat je hoort als je thuiskomt is stilte. Dat is het comfort van écht goed bouwen: niet meer techniek, maar minder,omdat het gebouw het werk doet.`;
+  const noHeatpump = `En hier zit misschien wel het mooiste van het passiefhuisconcept: er is geen warmtepomp nodig. De woning is zó goed geïsoleerd en luchtdicht dat de warmte van bewoners, apparaten en de zon vrijwel volstaat om het huis op temperatuur te houden. Geen buitenunit in de tuin, geen compressor die aanslaat, geen onderhoudscontract. De energierekening is minimaal, en het enige dat je hoort als je thuiskomt is stilte. Dat is het comfort van écht goed bouwen: niet meer techniek, maar minder — omdat het gebouw het werk doet.`;
 
   const biobasedExtra = isBiobased
-    ? `\n\nDe biobased materialisatie versterkt deze ambitie. Van de houtskeletbouw tot de gevelbekleding,elk onderdeel draagt bij aan een lage milieu-impact en een aanzienlijke CO₂-opslag in de constructie. Deze woningen zijn niet alleen energiezuinig in gebruik, ze hebben al tijdens de bouw een positief verhaal: elke kubieke meter hout die is verwerkt, is CO₂ die uit de atmosfeer is gehaald en voor decennia is vastgelegd.`
+    ? `\n\nDe biobased materialisatie versterkt deze ambitie. Van de houtskeletbouw tot de gevelbekleding — elk onderdeel draagt bij aan een lage milieu-impact en een aanzienlijke CO₂-opslag in de constructie. Deze woningen zijn niet alleen energiezuinig in gebruik, ze hebben al tijdens de bouw een positief verhaal: elke kubieke meter hout die is verwerkt, is CO₂ die uit de atmosfeer is gehaald en voor decennia is vastgelegd.`
     : "";
 
   const timberExtra = isTimber && !isBiobased
@@ -149,7 +140,7 @@ function livingExperienceParagraph(config: RenderConfig): string {
 }
 
 function closingParagraph(): string {
-  return `Het resultaat is een woonensemble dat bewijst dat hoge duurzaamheidsambities en een aantrekkelijk, herkenbaar straatbeeld hand in hand gaan. Bewoners krijgen een woning die uitzonderlijk weinig energie vraagt, een gezond binnenklimaat biedt, en er van buiten uitziet als een plek waar je met trots woont,vandaag en over dertig jaar.`;
+  return `Het resultaat is een woonensemble dat bewijst dat hoge duurzaamheidsambities en een aantrekkelijk, herkenbaar straatbeeld hand in hand gaan. Bewoners krijgen een woning die uitzonderlijk weinig energie vraagt, een gezond binnenklimaat biedt, en er van buiten uitziet als een plek waar je met trots woont — vandaag en over dertig jaar.`;
 }
 
 export function generateTenderStory(config: RenderConfig): string {

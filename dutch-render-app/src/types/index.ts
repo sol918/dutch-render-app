@@ -1,6 +1,6 @@
 // ─── Base geometry parameters ───
 
-export type NumberOfHouses = 4 | 5 | 6 | 7 | 8;
+export type NumberOfHouses = 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 export type AvailableWidth = 4.0 | 4.5 | 5.0 | 5.5 | 6.0 | 6.5 | 7.0;
 
 export interface GeometryParams {
@@ -14,12 +14,9 @@ export interface GeometryParams {
 
 export type StylePreset =
   | "jaren-30"
-  | "moderne-stadswoning"
+  | "modern"
   | "landelijk"
-  | "biobased"
-  | "oud-hollands"
-  | "industrieel"
-  | "haags";
+  | "biobased";
 
 // ─── Gutter types ───
 
@@ -112,7 +109,7 @@ export interface GeneratedVariant {
 
 // ─── Render engine ───
 
-export type RenderEngine = "google" | "bytedance";
+export type RenderEngine = "google";
 
 // ─── API request/response ───
 

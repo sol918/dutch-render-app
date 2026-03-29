@@ -17,15 +17,15 @@ export function CompareMode({ variants, onClose }: CompareModeProps) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex flex-col"
+      className="fixed inset-0 z-50 bg-white/95 backdrop-blur-sm flex flex-col"
     >
-      <div className="flex items-center justify-between px-6 py-4">
-        <h2 className="text-white/80 font-semibold text-sm">
+      <div className="flex items-center justify-between px-8 py-4 border-b border-black/5">
+        <h2 className="text-[0.6875rem] font-bold uppercase tracking-[0.1em] text-black/50">
           {variants.length} varianten
         </h2>
         <button
           onClick={onClose}
-          className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-all cursor-pointer"
+          className="w-9 h-9 bg-black/5 flex items-center justify-center text-black/40 hover:text-black hover:bg-black/10 transition-all cursor-pointer"
         >
           <X className="w-4 h-4" />
         </button>
@@ -43,7 +43,7 @@ export function CompareMode({ variants, onClose }: CompareModeProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.1 }}
-            className="relative rounded-2xl overflow-hidden border border-white/10"
+            className="relative overflow-hidden ghost-border"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -52,7 +52,7 @@ export function CompareMode({ variants, onClose }: CompareModeProps) {
               className="w-full h-full object-contain"
             />
             <button
-              className="absolute top-3 right-3 w-8 h-8 rounded-lg bg-black/50 backdrop-blur-sm flex items-center justify-center text-white/50 hover:text-white transition-all cursor-pointer"
+              className="absolute top-3 right-3 w-8 h-8 bg-black/80 flex items-center justify-center text-white hover:bg-black transition-all cursor-pointer"
               onClick={() => {
                 const link = document.createElement("a");
                 link.href = variant.imageUrl;

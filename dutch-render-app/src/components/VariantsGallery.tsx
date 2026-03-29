@@ -19,15 +19,11 @@ interface VariantsGalleryProps {
 
 export function configDistance(a: RenderConfig, b: RenderConfig): number {
   let dist = 0;
-  // 1. Style (most important)
   if (a.style !== b.style) dist += 10;
-  // 2. Dwarskappen & verspringingen
   if (a.geometry.crossGables !== b.geometry.crossGables) dist += 5;
   if (a.geometry.stepping !== b.geometry.stepping) dist += 4;
-  // 3. Number of houses & width
   dist += Math.abs(a.geometry.numberOfHouses - b.geometry.numberOfHouses) * 0.3;
   dist += Math.abs(a.geometry.width - b.geometry.width) * 0.2;
-  // 4. All other options
   if (a.gutterType !== b.gutterType) dist += 1;
   if (a.floorLine !== b.floorLine) dist += 1;
   if (a.brickType !== b.brickType) dist += 1;
@@ -42,10 +38,12 @@ export function configDistance(a: RenderConfig, b: RenderConfig): number {
 
 function groupByProximity(variants: GeneratedVariant[]): { label: string; variants: GeneratedVariant[] }[] {
   const styleLabels: Record<string, string> = {
-    "jaren-30": "Jaren 30",
-    "moderne-stadswoning": "Moderne Stadswoning",
+    "jaren-30": "Jaren '30",
+    "modern": "Modern",
     "landelijk": "Landelijk",
     "biobased": "Biobased",
+    // Legacy labels for old renders
+    "moderne-stadswoning": "Modern",
     "oud-hollands": "Oud-Hollands",
     "industrieel": "Industrieel",
     "haags": "Haagse Stijl",
@@ -115,27 +113,27 @@ function ThumbnailCard({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
+      initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.8 }}
+      exit={{ opacity: 0, scale: 0.9 }}
       transition={{ delay: Math.min(index * 0.02, 0.2) }}
-      className="shrink-0 relative group"
+      className="shrink-0 relative group p-1"
     >
-      <button
+      <div
         onClick={onSelect}
         className={cn(
-          "w-28 h-[72px] rounded-lg overflow-hidden border-2 transition-all cursor-pointer",
+          "w-28 h-[72px] overflow-hidden transition-all cursor-pointer border-2",
           isSelected
-            ? "border-indigo-500 shadow-lg shadow-indigo-500/20"
-            : "border-white/10 hover:border-white/25 opacity-70 hover:opacity-100"
+            ? "border-black"
+            : "border-transparent opacity-60 hover:opacity-100"
         )}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={variant.imageUrl} alt="Render" className="w-full h-full object-cover" />
-      </button>
+      </div>
       <button
         onClick={(e) => { e.stopPropagation(); onDelete(); }}
-        className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-red-500/80 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer hover:bg-red-500"
+        className="absolute top-0 right-0 w-5 h-5 bg-black text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer hover:bg-black/70 z-10"
       >
         <X className="w-3 h-3" />
       </button>
@@ -171,18 +169,18 @@ export function VariantsGallery({
 
   if (allVariants.length === 0) return null;
 
-  // Expanded: full-screen overlay replacing the bottom bar
+  // Expanded: full-screen overlay
   if (expanded) {
     return (
-      <div className="flex-1 flex flex-col overflow-hidden border-t border-white/5 bg-[#0a0a0a]">
+      <div className="flex-1 flex flex-col overflow-hidden border-t border-black/5 bg-[#F9F9F9]">
         {/* Header bar */}
-        <div className="flex items-center justify-between px-4 py-2 bg-[#0e0e0e] shrink-0">
-          <span className="text-[11px] font-semibold text-white/30 uppercase tracking-widest">
+        <div className="flex items-center justify-between px-4 py-2 bg-[#F4F3F3] shrink-0">
+          <span className="text-[0.6875rem] font-bold text-black/30 uppercase tracking-[0.1em]">
             Alle afbeeldingen ({allVariants.length})
           </span>
           <button
             onClick={onToggleExpanded}
-            className="flex items-center gap-1 text-[11px] text-white/40 hover:text-white/70 transition-colors cursor-pointer"
+            className="flex items-center gap-1 text-[0.6875rem] text-black/40 hover:text-black/70 transition-colors cursor-pointer uppercase tracking-[0.05em] font-medium"
           >
             Sluiten
             <ChevronDown className="w-3.5 h-3.5" />
@@ -191,8 +189,8 @@ export function VariantsGallery({
 
         {/* Selected image preview */}
         {selectedVariant && (
-          <div className="shrink-0 flex items-center justify-center p-4 bg-[#0a0a0a]" style={{ height: "40%" }}>
-            <div className="relative max-h-full rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-black/50">
+          <div className="shrink-0 flex items-center justify-center p-4 bg-[#F9F9F9]" style={{ height: "40%" }}>
+            <div className="relative max-h-full overflow-hidden ghost-border">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={selectedVariant.imageUrl}
@@ -204,23 +202,23 @@ export function VariantsGallery({
                 <TenderStoryBubble config={selectedVariant.config} />
               )}
               <button
-                onClick={() => downloadImage(selectedVariant.imageUrl, `sustainer-render.png`)}
-                className="absolute bottom-3 right-3 flex items-center gap-2 px-3 py-2 rounded-xl bg-black/60 backdrop-blur-md border border-white/15 text-white/90 hover:bg-black/80 hover:text-white transition-all cursor-pointer"
+                onClick={() => downloadImage(selectedVariant.imageUrl, `vlakwerk-render.png`)}
+                className="absolute bottom-3 right-3 flex items-center gap-2 px-3 py-2 bg-black text-white text-[0.6875rem] font-bold uppercase tracking-[0.1em] hover:bg-black/80 transition-all cursor-pointer"
               >
                 <Download className="w-3.5 h-3.5" />
-                <span className="text-xs font-medium">Download</span>
+                Download
               </button>
             </div>
           </div>
         )}
 
         {/* Grouped thumbnails grid */}
-        <div className="flex-1 overflow-y-auto px-4 py-3 space-y-4 border-t border-white/5">
+        <div className="flex-1 overflow-y-auto px-4 py-3 space-y-6 border-t border-black/5">
           {groupedVariants.map((group) => (
             <div key={group.label}>
-              <h4 className="text-[11px] font-semibold text-white/30 uppercase tracking-widest mb-2">
+              <h4 className="text-[0.6875rem] font-bold text-black/30 uppercase tracking-[0.1em] mb-2">
                 {group.label}
-                <span className="ml-2 text-white/20">({group.variants.length})</span>
+                <span className="ml-2 text-black/20">({group.variants.length})</span>
               </h4>
               <div className="flex gap-2 flex-wrap">
                 {group.variants.map((variant, i) => (
@@ -241,18 +239,18 @@ export function VariantsGallery({
     );
   }
 
-  // Collapsed: sorted by closest match to current config
+  // Collapsed: sorted by closest match
   const displayVariants = sortedByClosest.slice(0, 20);
   return (
-    <div className="border-t border-white/5 bg-[#0e0e0e] shrink-0">
+    <div className="border-t border-black/5 bg-[#F4F3F3] shrink-0">
       <div className="flex items-center justify-between px-4 pt-2">
-        <span className="text-[11px] font-semibold text-white/30 uppercase tracking-widest">
+        <span className="text-[0.6875rem] font-bold text-black/30 uppercase tracking-[0.1em]">
           Dichtsbijzijnd ({displayVariants.length}/{allVariants.length})
         </span>
         {allVariants.length > 20 && (
           <button
             onClick={onToggleExpanded}
-            className="flex items-center gap-1 text-[11px] text-white/40 hover:text-white/70 transition-colors cursor-pointer"
+            className="flex items-center gap-1 text-[0.6875rem] text-black/40 hover:text-black/70 transition-colors cursor-pointer uppercase tracking-[0.05em] font-medium"
           >
             Alle {allVariants.length} tonen
             <ChevronUp className="w-3.5 h-3.5" />

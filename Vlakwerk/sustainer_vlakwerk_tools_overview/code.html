@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#5d5f5f",
+              "surface-tint": "#5e5e5e",
+              "on-secondary": "#ffffff",
+              "surface": "#f9f9f9",
+              "tertiary-container": "#737575",
+              "surface-dim": "#dadada",
+              "inverse-primary": "#c6c6c6",
+              "surface-bright": "#f9f9f9",
+              "primary": "#000000",
+              "primary-fixed": "#5e5e5e",
+              "on-error": "#ffffff",
+              "error-container": "#ffdad6",
+              "on-tertiary-fixed": "#ffffff",
+              "surface-container": "#eeeeee",
+              "error": "#ba1a1a",
+              "primary-fixed-dim": "#474747",
+              "background": "#f9f9f9",
+              "on-tertiary-container": "#ffffff",
+              "on-primary": "#e2e2e2",
+              "surface-container-highest": "#e2e2e2",
+              "on-tertiary": "#e2e2e2",
+              "on-tertiary-fixed-variant": "#e2e2e2",
+              "on-primary-container": "#ffffff",
+              "outline": "#777777",
+              "on-secondary-fixed-variant": "#3b3b3c",
+              "on-error-container": "#410002",
+              "secondary-container": "#d5d4d4",
+              "surface-container-high": "#e8e8e8",
+              "surface-container-lowest": "#ffffff",
+              "primary-container": "#3b3b3b",
+              "on-background": "#1a1c1c",
+              "secondary-fixed": "#c7c6c6",
+              "inverse-on-surface": "#f1f1f1",
+              "on-primary-fixed-variant": "#e2e2e2",
+              "secondary-fixed-dim": "#acabab",
+              "on-secondary-fixed": "#1b1c1c",
+              "tertiary-fixed-dim": "#454747",
+              "on-primary-fixed": "#ffffff",
+              "outline-variant": "#c6c6c6",
+              "on-surface-variant": "#474747",
+              "tertiary": "#3a3c3c",
+              "on-surface": "#1a1c1c",
+              "on-secondary-container": "#1b1c1c",
+              "secondary": "#5e5e5e",
+              "inverse-surface": "#2f3131",
+              "surface-container-low": "#f4f3f3",
+              "surface-variant": "#e2e2e2"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+            font-size: 24px;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9f9f9;
+        }
+        .ghost-border {
+            border: 1px solid rgba(198, 198, 198, 0.2);
+        }
+        .technical-label {
+            font-size: 0.6875rem;
+            letter-spacing: 0.1em;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body class="text-on-surface antialiased">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-xl flex justify-between items-center px-12 h-20 border-b border-zinc-200/20">
+<div class="flex items-center gap-8">
+<span class="text-lg font-black tracking-tighter text-zinc-950 uppercase">VLAKWERK_PRECISION</span>
+<div class="hidden md:flex gap-8 items-center h-full pt-1">
+<a class="text-zinc-950 border-b-2 border-zinc-950 pb-4 technical-label uppercase" href="#">Configurator</a>
+<a class="text-zinc-400 hover:text-zinc-950 transition-colors pb-4 technical-label uppercase" href="#">Planning</a>
+<a class="text-zinc-400 hover:text-zinc-950 transition-colors pb-4 technical-label uppercase" href="#">Render</a>
+<a class="text-zinc-400 hover:text-zinc-950 transition-colors pb-4 technical-label uppercase" href="#">Portal</a>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:block">
+<div class="flex items-center gap-2 px-3 py-1 bg-surface-container-high">
+<span class="technical-label uppercase text-[9px]">SYSTEM STATUS:</span>
+<span class="technical-label uppercase text-[9px] text-zinc-950 font-bold">OPTIMIZED</span>
+</div>
+</div>
+<span class="material-symbols-outlined cursor-pointer text-zinc-950">settings</span>
+<span class="material-symbols-outlined cursor-pointer text-zinc-950">account_circle</span>
+</div>
+</nav>
+<!-- Side Navigation (Suppressed for landing tool selection as per Shell Visibility Rules, using main canvas) -->
+<main class="pt-32 pb-20 px-12 max-w-[1600px] mx-auto min-h-screen flex flex-col">
+<!-- Header Section -->
+<header class="mb-20 flex flex-col md:flex-row md:items-end justify-between gap-8">
+<div class="max-w-3xl">
+<p class="technical-label uppercase text-zinc-500 mb-4">V.24.04.1 — DIGITAL ECOSYSTEM</p>
+<h1 class="text-6xl md:text-8xl font-bold tracking-tighter text-zinc-950 leading-[0.9]">
+                    TECHNICAL<br/>CURATOR.
+                </h1>
+<p class="mt-8 text-lg text-zinc-500 max-w-xl font-light leading-relaxed">
+                    Access the Sustainer Vlakwerk precision engine. Select a core digital instrument to begin configuring, scheduling, or visualizing your technical assembly.
+                </p>
+</div>
+<div class="flex flex-col items-end">
+<div class="w-32 h-12 bg-zinc-200/30 ghost-border flex items-center justify-center grayscale opacity-60 mb-2">
+<span class="technical-label uppercase text-[8px]">Partner Logo Placeholder</span>
+</div>
+<p class="technical-label uppercase text-zinc-400 text-[9px]">POWERED BY SUSTAINER VLAKWERK</p>
+</div>
+</header>
+<!-- Tool Selection Grid (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 ghost-border">
+<!-- Tool 1: Configurator -->
+<a class="group relative flex flex-col p-10 bg-white hover:bg-zinc-950 transition-all duration-500 ease-in-out min-h-[500px] border-r border-zinc-200/20" href="#">
+<div class="mb-12">
+<span class="technical-label uppercase text-zinc-400 group-hover:text-zinc-500 mb-2 block">TOOL_01</span>
+<h2 class="text-3xl font-bold tracking-tight text-zinc-950 group-hover:text-white transition-colors">Rijwoning Configurator</h2>
+</div>
+<div class="flex-grow flex items-center justify-center p-4">
+<div class="w-full aspect-square ghost-border p-4 flex items-center justify-center relative overflow-hidden">
+<img alt="Technical 3D model" class="w-full h-full object-cover grayscale brightness-110 group-hover:scale-105 transition-transform duration-700" data-alt="high-precision technical line-art diagram of a modern modular house showing CNC-milled details and architectural cross-sections in black and white" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYtWuNRo973bbG6mXEUcobif8Z3au6QyYE7Qu_Cr9KoV8IWwxoALOfe87LEk4l6aT9btPAnYbbY0hDSBBy0xklOWMMG30BD4gEOC5Ogeqy8VxFnX9Z5JLxtw3bFpLTuHXeksZpYqSPifGV8NoVw5cB09eGGAQoYMU9HaNvDXzVnSQr6eT_20Rv3AttNMmHsB_MOL1KwouRvuRYD82eqantzXr84XnCToOSPLB0dzrrE_u0Udtg9KpRie9Z2Xk582rnEeTAFGAFy6c"/>
+<div class="absolute inset-0 bg-zinc-950/0 group-hover:bg-zinc-950/40 transition-colors"></div>
+</div>
+</div>
+<div class="mt-12 space-y-4">
+<p class="text-sm text-zinc-500 group-hover:text-zinc-400 font-light leading-snug">
+                        Real-time pricing &amp; 3D model generation for modular residential projects.
+                    </p>
+<div class="flex items-center gap-2 pt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="technical-label text-white uppercase">Initialize Engine</span>
+<span class="material-symbols-outlined text-white text-sm">arrow_forward</span>
+</div>
+</div>
+</a>
+<!-- Tool 2: Planning -->
+<a class="group relative flex flex-col p-10 bg-surface-container-low hover:bg-zinc-900 transition-all duration-500 ease-in-out min-h-[500px] border-r border-zinc-200/20" href="#">
+<div class="mb-12">
+<span class="technical-label uppercase text-zinc-400 group-hover:text-zinc-500 mb-2 block">TOOL_02</span>
+<h2 class="text-3xl font-bold tracking-tight text-zinc-950 group-hover:text-white transition-colors">Gantt-chart Tool</h2>
+</div>
+<div class="flex-grow flex items-center justify-center p-4">
+<div class="w-full aspect-video flex flex-col justify-between gap-1">
+<div class="h-1 bg-zinc-300 w-1/2 group-hover:bg-white/30"></div>
+<div class="h-1 bg-zinc-300 w-3/4 translate-x-4 group-hover:bg-white/50"></div>
+<div class="h-1 bg-zinc-950 w-1/3 translate-x-12 group-hover:bg-white"></div>
+<div class="h-1 bg-zinc-300 w-1/2 translate-x-8 group-hover:bg-white/30"></div>
+<div class="h-1 bg-zinc-300 w-2/3 group-hover:bg-white/40"></div>
+</div>
+</div>
+<div class="mt-12 space-y-4">
+<p class="text-sm text-zinc-500 group-hover:text-zinc-400 font-light leading-snug">
+                        Project scheduling &amp; logistics integrated with factory production cycles.
+                    </p>
+<div class="flex items-center gap-2 pt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="technical-label text-white uppercase">View Timeline</span>
+<span class="material-symbols-outlined text-white text-sm">arrow_forward</span>
+</div>
+</div>
+</a>
+<!-- Tool 3: Render App -->
+<a class="group relative flex flex-col p-10 bg-white hover:bg-zinc-950 transition-all duration-500 ease-in-out min-h-[500px] border-r border-zinc-200/20" href="#">
+<div class="mb-12">
+<span class="technical-label uppercase text-zinc-400 group-hover:text-zinc-500 mb-2 block">TOOL_03</span>
+<h2 class="text-3xl font-bold tracking-tight text-zinc-950 group-hover:text-white transition-colors">Visualizer</h2>
+</div>
+<div class="flex-grow flex items-center justify-center p-4">
+<div class="w-full h-full relative overflow-hidden ghost-border">
+<img alt="Architectural Render" class="w-full h-full object-cover grayscale contrast-125 group-hover:scale-110 transition-transform duration-1000" data-alt="high-contrast monochromatic architectural render of a minimalist wooden structure with dramatic shadows and sharp lines under bright direct sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqBfievhmMvM1cOtxH4f0laz4E3X0a20u7I1rAyoyEU2YKZ9HrPrM9VMnMcjfl5nDDjQtJeRViM-A7SP8uRmHdbqjAAHqRxZlBRRIySVs-gwA7u-vdIfyBriFoqFezL_9dpLUBgbMAo_v_LRDpUQiJsEWjudcuYa-BaRez_4kTNgqrAy8Td_UnNUwTZZIS2w_s70pn8IbLzZtz87pSXTXmDUion0rTrj2WwLC-nYwqchiA3GPgJctfLZq_0g5a550BmKTX_OUQNUA"/>
+<div class="absolute top-4 left-4 bg-zinc-950 text-white px-2 py-1">
+<span class="technical-label uppercase text-[8px]">AI_GENERATED</span>
+</div>
+</div>
+</div>
+<div class="mt-12 space-y-4">
+<p class="text-sm text-zinc-500 group-hover:text-zinc-400 font-light leading-snug">
+                        Property selection &amp; AI-driven renders for architectural presentations.
+                    </p>
+<div class="flex items-center gap-2 pt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="technical-label text-white uppercase">Generate Scene</span>
+<span class="material-symbols-outlined text-white text-sm">arrow_forward</span>
+</div>
+</div>
+</a>
+<!-- Tool 4: Information Portal -->
+<a class="group relative flex flex-col p-10 bg-surface-container-low hover:bg-zinc-900 transition-all duration-500 ease-in-out min-h-[500px]" href="#">
+<div class="mb-12">
+<span class="technical-label uppercase text-zinc-400 group-hover:text-zinc-500 mb-2 block">TOOL_04</span>
+<h2 class="text-3xl font-bold tracking-tight text-zinc-950 group-hover:text-white transition-colors">Technical Portal</h2>
+</div>
+<div class="flex-grow flex flex-col items-center justify-center p-4">
+<span class="material-symbols-outlined text-8xl text-zinc-200 group-hover:text-white/20 transition-colors" data-icon="info">info</span>
+<div class="mt-4 flex flex-wrap justify-center gap-2">
+<span class="px-2 py-1 bg-white text-zinc-950 technical-label uppercase text-[8px] group-hover:bg-zinc-800 group-hover:text-white">LVL 2D-Casco</span>
+<span class="px-2 py-1 bg-white text-zinc-950 technical-label uppercase text-[8px] group-hover:bg-zinc-800 group-hover:text-white">CNC-04 Spec</span>
+<span class="px-2 py-1 bg-white text-zinc-950 technical-label uppercase text-[8px] group-hover:bg-zinc-800 group-hover:text-white">U-Value 0.12</span>
+</div>
+</div>
+<div class="mt-12 space-y-4">
+<p class="text-sm text-zinc-500 group-hover:text-zinc-400 font-light leading-snug">
+                        Detailed specifications &amp; properties of the patented LVL 2D-Casco system.
+                    </p>
+<div class="flex items-center gap-2 pt-4 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="technical-label text-white uppercase">Access Library</span>
+<span class="material-symbols-outlined text-white text-sm">arrow_forward</span>
+</div>
+</div>
+</a>
+</div>
+<!-- System Stats Footer -->
+<footer class="mt-auto pt-20 border-t border-zinc-200/20 flex flex-col md:flex-row justify-between gap-8">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-12">
+<div>
+<span class="technical-label uppercase text-zinc-400 block mb-2">Build Vers.</span>
+<span class="text-sm font-medium">PRECISION_24.0.1</span>
+</div>
+<div>
+<span class="technical-label uppercase text-zinc-400 block mb-2">Latent Nodes</span>
+<span class="text-sm font-medium">84 ACTIVE</span>
+</div>
+<div>
+<span class="technical-label uppercase text-zinc-400 block mb-2">Region</span>
+<span class="text-sm font-medium">EU_CENTRAL_1</span>
+</div>
+<div>
+<span class="technical-label uppercase text-zinc-400 block mb-2">Engine</span>
+<span class="text-sm font-medium">VLAKWERK_CORE</span>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="technical-label uppercase text-zinc-400">Copyright © 2024 Sustainer</span>
+<div class="w-1 h-1 bg-zinc-300"></div>
+<span class="technical-label uppercase text-zinc-950">All rights reserved</span>
+</div>
+</footer>
+</main>
+<!-- Side Navigation Shell Overlay (Hidden by default, triggered by hover or focus) -->
+<aside class="hidden md:flex h-full w-20 fixed left-0 top-0 border-r border-zinc-200/20 bg-zinc-50 flex-col items-center py-8 z-40 transition-all hover:w-64 group">
+<div class="mb-12">
+<span class="material-symbols-outlined text-zinc-950">architecture</span>
+</div>
+<div class="flex flex-col gap-10 flex-grow">
+<div class="flex items-center gap-4 cursor-pointer text-zinc-400 hover:text-zinc-950">
+<span class="material-symbols-outlined">architecture</span>
+<span class="technical-label uppercase hidden group-hover:block whitespace-nowrap">Configurator</span>
+</div>
+<div class="flex items-center gap-4 cursor-pointer text-zinc-400 hover:text-zinc-950">
+<span class="material-symbols-outlined">event_note</span>
+<span class="technical-label uppercase hidden group-hover:block whitespace-nowrap">Planning Tool</span>
+</div>
+<div class="flex items-center gap-4 cursor-pointer text-zinc-400 hover:text-zinc-950">
+<span class="material-symbols-outlined">layers</span>
+<span class="technical-label uppercase hidden group-hover:block whitespace-nowrap">Visualizer</span>
+</div>
+<div class="flex items-center gap-4 cursor-pointer text-zinc-400 hover:text-zinc-950">
+<span class="material-symbols-outlined">info</span>
+<span class="technical-label uppercase hidden group-hover:block whitespace-nowrap">Technical Portal</span>
+</div>
+</div>
+<div class="mt-auto">
+<div class="w-8 h-8 bg-zinc-950 flex items-center justify-center cursor-pointer">
+<span class="material-symbols-outlined text-white text-sm">add</span>
+</div>
+</div>
+</aside>
+</body></html>

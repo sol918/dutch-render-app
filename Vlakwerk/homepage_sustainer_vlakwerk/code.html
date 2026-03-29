@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SUSTAINER VLAKWERK | Industrial 2D Building Elements</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-container": "#d5d4d4",
+              "error": "#ba1a1a",
+              "inverse-surface": "#2f3131",
+              "surface-container-low": "#f4f3f3",
+              "on-surface-variant": "#474747",
+              "surface-bright": "#f9f9f9",
+              "on-tertiary-fixed": "#ffffff",
+              "on-tertiary": "#e2e2e2",
+              "on-tertiary-fixed-variant": "#e2e2e2",
+              "tertiary-fixed-dim": "#454747",
+              "on-secondary": "#ffffff",
+              "secondary-fixed-dim": "#acabab",
+              "on-background": "#1a1c1c",
+              "tertiary-fixed": "#5d5f5f",
+              "on-primary-container": "#ffffff",
+              "surface": "#f9f9f9",
+              "on-tertiary-container": "#ffffff",
+              "surface-variant": "#e2e2e2",
+              "error-container": "#ffdad6",
+              "inverse-on-surface": "#f1f1f1",
+              "inverse-primary": "#c6c6c6",
+              "surface-container-high": "#e8e8e8",
+              "tertiary-container": "#737575",
+              "outline-variant": "#c6c6c6",
+              "on-surface": "#1a1c1c",
+              "outline": "#777777",
+              "on-primary": "#e2e2e2",
+              "surface-tint": "#5e5e5e",
+              "secondary-fixed": "#c7c6c6",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary-fixed-variant": "#3b3b3c",
+              "on-secondary-container": "#1b1c1c",
+              "tertiary": "#3a3c3c",
+              "on-error": "#ffffff",
+              "surface-dim": "#dadada",
+              "on-secondary-fixed": "#1b1c1c",
+              "surface-container": "#eeeeee",
+              "background": "#f9f9f9",
+              "on-error-container": "#410002",
+              "on-primary-fixed": "#ffffff",
+              "primary-fixed-dim": "#474747",
+              "primary-container": "#3b3b3b",
+              "primary": "#000000",
+              "secondary": "#5e5e5e",
+              "surface-container-highest": "#e2e2e2",
+              "primary-fixed": "#5e5e5e",
+              "on-primary-fixed-variant": "#e2e2e2"
+            },
+            fontFamily: {
+              "headline": ["Inter", "sans-serif"],
+              "body": ["Inter", "sans-serif"],
+              "label": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            font-size: 1.25rem;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F9F9F9;
+        }
+        .ghost-border {
+            border: 1px solid rgba(198, 198, 198, 0.2);
+        }
+    </style>
+</head>
+<body class="text-on-surface selection:bg-primary selection:text-white">
+<!-- TopNavBar Shell -->
+<nav class="fixed top-0 w-full z-50 bg-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-black/10 dark:border-white/10">
+<div class="flex justify-between items-center w-full px-8 py-6 max-w-[1920px] mx-auto">
+<div class="text-lg font-black tracking-tighter text-black dark:text-white uppercase">
+                SUSTAINER VLAKWERK
+            </div>
+<div class="hidden md:flex gap-12">
+<a class="font-['Inter'] tracking-tighter font-bold uppercase text-[0.875rem] text-black dark:text-white border-b border-black dark:border-white pb-1" href="#">Product</a>
+<a class="font-['Inter'] tracking-tighter font-bold uppercase text-[0.875rem] text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors duration-300" href="#">Precision</a>
+<a class="font-['Inter'] tracking-tighter font-bold uppercase text-[0.875rem] text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors duration-300" href="#">TCO &amp; GO</a>
+<a class="font-['Inter'] tracking-tighter font-bold uppercase text-[0.875rem] text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors duration-300" href="#">Partnership</a>
+<a class="font-['Inter'] tracking-tighter font-bold uppercase text-[0.875rem] text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors duration-300" href="#">Contact</a>
+</div>
+</div>
+</nav>
+<!-- SideNavBar (Technical Specs Overlay) -->
+<aside class="fixed right-0 h-full w-64 border-l border-black/5 dark:border-white/5 bg-[#F4F3F3] dark:bg-zinc-900 hidden lg:flex flex-col pt-24 px-6 z-40">
+<div class="mb-12">
+<p class="font-['Inter'] text-[0.6875rem] tracking-[0.1em] uppercase font-medium text-black/50">TECHNICAL SPECS</p>
+<p class="font-['Inter'] text-[0.6875rem] tracking-[0.05em] uppercase font-bold text-black mt-1">Vlakwerk Precision Engine</p>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-4 p-4 text-black dark:text-white bg-white dark:bg-black transition-transform duration-300 translate-x-1">
+<span class="material-symbols-outlined" data-icon="architecture">architecture</span>
+<span class="font-['Inter'] text-[0.6875rem] tracking-[0.1em] uppercase font-medium">LVL 40mm</span>
+</div>
+<div class="flex items-center gap-4 p-4 text-black/50 dark:text-white/50 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors">
+<span class="material-symbols-outlined" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="font-['Inter'] text-[0.6875rem] tracking-[0.1em] uppercase font-medium">CNC-04</span>
+</div>
+<div class="flex items-center gap-4 p-4 text-black/50 dark:text-white/50 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors">
+<span class="material-symbols-outlined" data-icon="straighten">straighten</span>
+<span class="font-['Inter'] text-[0.6875rem] tracking-[0.1em] uppercase font-medium">Tolerance &lt;0.1mm</span>
+</div>
+<div class="flex items-center gap-4 p-4 text-black/50 dark:text-white/50 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors">
+<span class="material-symbols-outlined" data-icon="verified">verified</span>
+<span class="font-['Inter'] text-[0.6875rem] tracking-[0.1em] uppercase font-medium">ISO-9001</span>
+</div>
+</div>
+</aside>
+<main class="lg:mr-64 pt-20">
+<!-- Hero Section -->
+<section class="min-h-screen flex flex-col justify-end px-8 pb-24 md:px-16 lg:px-24">
+<div class="absolute inset-0 -z-10 overflow-hidden">
+<img alt="Technical architectural detail" class="w-full h-full object-cover grayscale brightness-90 contrast-125" data-alt="monochrome close-up of high-precision LVL wood panel texture with sharp industrial edges and subtle wood grain in architectural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrs_9szLKEkl7zUXrZKwUVlf5owN3ZSKHgo1Yk-wdlvZdAvD5Eyjs_3MUWqXt5E3v7QXkxN_EziiesvkUuwTKpctTnG4nm6kerclOPTABjeGOB_roWJCj6Z5fQp9qpE0EjApiId3GucHXfkIeByhDd7AW6Xj7ff2KYBC8hDjQJ6p-E7x-21_jF0lwPgia3lnFWcT8znK2SZinan_o2kCpUU_xbbLq6kh8I_ajLw45Ex2ggl6td6eEtK2mU6ErrARHWsyVyTT6NEkM"/>
+</div>
+<div class="max-w-5xl">
+<span class="inline-block bg-primary text-white text-[0.6875rem] tracking-[0.2em] font-medium uppercase px-4 py-2 mb-8">
+                    INDUSTRIAL GRADE 2D
+                </span>
+<h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-[-0.04em] uppercase leading-[0.9] text-primary mb-8">
+                    0MM TOLERANCE.<br/>DIRECT TO SITE.<br/>READY FOR ASSEMBLY.
+                </h1>
+<p class="text-xl md:text-2xl font-light tracking-tight text-on-surface-variant max-w-2xl">
+                    The physical 2D chassis for your next living concept. Engineered precision meeting architectural vision at scale.
+                </p>
+</div>
+</section>
+<!-- The Physical Delivery - Section 1 -->
+<section class="py-32 px-8 md:px-16 lg:px-24 bg-surface">
+<div class="flex flex-col lg:flex-row justify-between items-start gap-12 mb-24">
+<div class="max-w-md">
+<span class="text-[0.6875rem] tracking-[0.2em] uppercase font-bold text-outline mb-4 block">01 / LOGISTICS</span>
+<h2 class="text-4xl font-black tracking-tighter uppercase leading-tight mb-6">The Physical Delivery</h2>
+<p class="body-md text-on-surface-variant leading-relaxed">
+                        We don't deliver boxes. We deliver the components. High-performance walls, floors, and roofs, CNC-milled to surgical precision. Every element arrives tagged, sequenced, and ready to slot into place.
+                    </p>
+</div>
+<div class="text-[0.6875rem] tracking-[0.1em] uppercase font-mono text-primary flex gap-8">
+<span class="border-b border-primary pb-1 cursor-pointer">FLOORS</span>
+<span class="text-outline cursor-pointer hover:text-primary transition-colors">WALLS</span>
+<span class="text-outline cursor-pointer hover:text-primary transition-colors">ROOFS</span>
+</div>
+</div>
+<!-- Bento-ish Grid for Elements -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-px bg-outline-variant/30 ghost-border">
+<div class="md:col-span-8 bg-surface-container-lowest p-12 flex flex-col justify-between aspect-video md:aspect-auto">
+<div class="flex justify-between items-start">
+<span class="text-[0.6875rem] tracking-[0.1em] font-mono">SPEC: LVL_ELEMENT_01</span>
+<span class="material-symbols-outlined" data-icon="open_in_full">open_in_full</span>
+</div>
+<img alt="Wall element close-up" class="w-full h-64 object-cover grayscale my-8" data-alt="dramatic high-contrast architectural shot of a massive LVL wood panel being lowered into place by a crane on a construction site" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBN8RzbGtKPWH6pRibkfaQQo55rFwSRTstmMRN88QG78TL1dyL3Bk2feqY7gzx50jmAqiW2biMF4ZCWCyUKF4ykE6w-H9nrp0Ip9PnmZguM-dc54W6oBU2w-TjV3s6GxDY9l0ng877pTVUpRE5locx8VsGlahF-__mo0R4CCgaK2w9w5fxkAMb0Bbt67lKtGV22-XqJaz_MaWvTD8BLDCdX_5dCtbfRVWZB9M1MQFdju7xyq53UWCisBKRVk0xk5DyS__w-bo-oCRs"/>
+<div class="flex flex-col gap-2">
+<h3 class="text-2xl font-black uppercase tracking-tight">Vlakwerk Wall Systems</h3>
+<p class="text-sm text-on-surface-variant max-w-sm">Load-bearing structural panels with integrated thermal break and precision service channels.</p>
+</div>
+</div>
+<div class="md:col-span-4 bg-surface-container-low p-12 flex flex-col justify-between">
+<div>
+<span class="text-[0.6875rem] tracking-[0.1em] font-mono">STRENGTH / RATIO</span>
+<div class="h-px w-full bg-outline-variant my-6"></div>
+<p class="text-6xl font-black tracking-tighter">98%</p>
+<p class="text-[0.6875rem] tracking-[0.1em] uppercase font-bold mt-2">Material Efficiency</p>
+</div>
+<div class="mt-12">
+<p class="text-sm font-medium leading-tight">Optimized nesting algorithms reduce waste to near-zero during the CNC manufacturing process.</p>
+</div>
+</div>
+<div class="md:col-span-4 bg-surface-container-high p-12 flex flex-col justify-between aspect-square">
+<span class="text-[0.6875rem] tracking-[0.1em] font-mono">SURFACE FINISH</span>
+<div class="flex flex-col">
+<h4 class="text-xl font-bold uppercase tracking-tight mb-4">Industrial Aesthetic</h4>
+<div class="flex flex-wrap gap-2">
+<span class="px-3 py-1 bg-primary text-white text-[0.6rem] uppercase tracking-widest font-mono">Sanded</span>
+<span class="px-3 py-1 border border-primary text-primary text-[0.6rem] uppercase tracking-widest font-mono">Natural</span>
+<span class="px-3 py-1 border border-primary text-primary text-[0.6rem] uppercase tracking-widest font-mono">Coated</span>
+</div>
+</div>
+</div>
+<div class="md:col-span-8 bg-surface-container-lowest p-12">
+<div class="grid grid-cols-2 gap-12">
+<div>
+<span class="text-[0.6875rem] tracking-[0.1em] uppercase text-outline">Tolerance</span>
+<p class="text-3xl font-black tracking-tighter mt-2">+/- 0.1mm</p>
+</div>
+<div>
+<span class="text-[0.6875rem] tracking-[0.1em] uppercase text-outline">Lead Time</span>
+<p class="text-3xl font-black tracking-tighter mt-2">14 DAYS</p>
+</div>
+<div class="col-span-2 pt-8">
+<button class="w-full bg-primary text-white py-6 px-8 text-[0.875rem] font-bold uppercase tracking-[0.2em] hover:bg-zinc-800 transition-colors">
+                                Download Technical Catalog
+                            </button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Intel Inside - Section 2 -->
+<section class="py-48 px-8 md:px-16 lg:px-24 bg-white relative overflow-hidden">
+<div class="absolute top-0 right-0 w-1/2 h-full opacity-5 pointer-events-none">
+<span class="text-[25rem] font-black leading-none tracking-tighter select-none">VLAK</span>
+</div>
+<div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-24">
+<div class="w-full md:w-1/2">
+<div class="aspect-[3/4] bg-surface-container-low relative overflow-hidden ghost-border">
+<img alt="Advanced manufacturing" class="w-full h-full object-cover grayscale mix-blend-multiply" data-alt="industrial robotic arm operating on a wooden structural panel in a minimalist high-tech factory setting with clean lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQ6a3HyB7kB_uB2qlQwg92eQf0hETF_IMy0yrksNMqoQKbe_SM5qIZvY2dHCVCRIGhbjvpdwLsuPeJSJcMF11Z7PAUdkbmz_iHErwYliUpmJnwEBvUIowimxNqRRAh2WEpob_m7s0GMkswvMQmNJczF_8TPXVPznLh_39HlS5u0-JsrGmVzonEJe_5MmjjXwn1-aZsMcC7q7d9oouC-y3ScU1XmZs3J2T0RKirVlXD6FaDZNZ2TMrsp0UzcJOn6HqimRsIVozzdJ8"/>
+<div class="absolute bottom-12 left-12">
+<div class="bg-primary text-white px-6 py-4 inline-block">
+<p class="text-[0.6875rem] tracking-[0.2em] font-bold">POWERED BY</p>
+<p class="text-2xl font-black tracking-tighter uppercase">SUSTAINER</p>
+</div>
+</div>
+</div>
+</div>
+<div class="w-full md:w-1/2">
+<span class="text-[0.6875rem] tracking-[0.2em] uppercase font-bold text-outline mb-4 block">02 / ECOSYSTEM</span>
+<h2 class="text-6xl font-black tracking-tighter uppercase leading-[0.9] mb-12">Intel Inside<br/>for Housing</h2>
+<div class="space-y-8">
+<div>
+<h3 class="text-lg font-bold uppercase mb-2">The Ingredient Model</h3>
+<p class="text-on-surface-variant leading-relaxed">
+                                We are the engine beneath the hood of your building concept. Architects and developers use Sustainer Vlakwerk to industrialize their designs without losing creative control.
+                            </p>
+</div>
+<div class="grid grid-cols-1 gap-6">
+<div class="p-6 bg-surface-container-low border-l-4 border-primary">
+<p class="font-bold uppercase text-xs mb-1">API Integration</p>
+<p class="text-sm text-on-surface-variant">Direct BIM-to-Mill data pipeline for seamless transition from Revit to the production floor.</p>
+</div>
+<div class="p-6 bg-surface-container-low border-l-4 border-primary">
+<p class="font-bold uppercase text-xs mb-1">Performance Guarantee</p>
+<p class="text-sm text-on-surface-variant">Certified fire, acoustic, and structural performance ratings on every element.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Product Showcase / Gallery Asymmetric -->
+<section class="py-32 px-8 md:px-16 lg:px-24 bg-surface-container-lowest">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<div class="md:pt-48">
+<div class="ghost-border p-1 bg-white mb-8">
+<img alt="Modern architecture" class="w-full grayscale aspect-[4/5] object-cover" data-alt="minimalist wooden architectural structure with sharp geometric lines against a pale sky in monochrome" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2X5mRuvGLwkBhIXUYebn7QiG7WD_F8ONkgXEL6MzLdRfSypU1MATbjURsZXigZMiw2etViwZvyOcVi_CiwcegQcqCw3FXaWa-ftTQVJMPcYMhWmWWYDjbLGo19uV4CCSVTJTeUD-MrqOnISNgdmgKsNtV19zlhAwmKSafzPD6GxJvWDXJOWo9qHg1biQ5BeXj6Wtfe_UmOJpJTarnMQet6bx60Brg8474LxS8sMTPgQYIc_VFT_P8sOozMFALuhclAHfhCWXLg3Y"/>
+</div>
+<span class="text-[0.6875rem] tracking-[0.1em] uppercase font-mono">Exhibit A / Residential</span>
+<h4 class="text-xl font-bold uppercase mt-2">Single Unit Chassis</h4>
+</div>
+<div>
+<div class="ghost-border p-1 bg-white mb-8">
+<img alt="Industrial detail" class="w-full grayscale aspect-[4/5] object-cover" data-alt="close-up of industrial CNC machine head carving a precise groove into a light wood surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1xgkRn7U2AbpVao2lEa1E0qJNgFc4cox0zORNs1HNGYAj26pRW_9p4qNENteL7kL9P6jti3YQlU0jet0V2A_8D7wH-bgP2K8-SBJTEJGtFM1DOlOeqANt80cE8daz0CNxsHboeVO5B123Y2sV4j2ymxCK8vTx3HLjxgMZ_6BeUVX9MmRdR3ciexjkeynERwK4XZReSyHolkECzmYERb7qazh9bHL0V006xsNHkPNZGyvXtb1eL0uR4xCk5O9RrOoho8KHpd8TjAs"/>
+</div>
+<span class="text-[0.6875rem] tracking-[0.1em] uppercase font-mono">Exhibit B / Component</span>
+<h4 class="text-xl font-bold uppercase mt-2">Milled Connectivity</h4>
+</div>
+<div class="md:pt-24">
+<div class="ghost-border p-1 bg-white mb-8">
+<img alt="Commercial building" class="w-full grayscale aspect-[4/5] object-cover" data-alt="low-angle shot of a multi-story building frame showing the skeletal structure of wooden panels" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBx1Qp282VKRPB-dpS4kn4DoOyXpQwh-QMO64OSusrBAKtsVIBeehCjh-ebnb5ZgeuVfvq5Vx9WXGrpIwyHaiEvW0jbOux5aubckxe_JNIcXk88thMIz8vkM0y9Y4pWA8OSLt_VnsDDy_TRS2tqZJCzeAHfA_OP5iLBAMdqy93yeXGXAAUw9d7vnGN_DBtnRGF9jp1nFvWi1TZ0yfQngTzvIqcOxeVeTUMx__QgKC9ZEbYCFYAx4Cwsxi7Mv1_pWtvuogRK01y09hY"/>
+</div>
+<span class="text-[0.6875rem] tracking-[0.1em] uppercase font-mono">Exhibit C / Massing</span>
+<h4 class="text-xl font-bold uppercase mt-2">Multi-Storey Core</h4>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full bg-[#F9F9F9] dark:bg-black border-t border-black/10 dark:border-white/10 mt-24">
+<div class="w-full px-8 py-12 flex flex-col md:flex-row justify-between items-start gap-8 max-w-[1920px] mx-auto">
+<div class="flex flex-col gap-6">
+<div class="text-sm font-bold tracking-tighter uppercase">SUSTAINER VLAKWERK</div>
+<p class="max-w-xs font-['Inter'] text-[0.6875rem] tracking-[0.05em] uppercase text-black/40">The future of modular construction is 2D elements. High precision, low carbon, zero waste.</p>
+</div>
+<div class="flex flex-wrap gap-12">
+<div class="flex flex-col gap-4">
+<p class="font-['Inter'] text-[0.6875rem] tracking-[0.05em] uppercase font-bold">Documentation</p>
+<ul class="flex flex-col gap-2">
+<li><a class="font-['Inter'] text-[0.6875rem] tracking-[0.05em] uppercase text-black/40 hover:text-black transition-colors" href="#">Technical Documentation</a></li>
+<li><a class="font-['Inter'] text-[0.6875rem] tracking-[0.05em] uppercase text-black/40 hover:text-black transition-colors" href="#">BIM Libraries</a></li>
+<li><a class="font-['Inter'] text-[0.6875rem] tracking-[0.05em] uppercase text-black/40 hover:text-black transition-colors" href="#">ISO Certifications</a></li>
+</ul>
+</div>
+<div class="flex flex-col gap-4">
+<p class="font-['Inter'] text-[0.6875rem] tracking-[0.05em] uppercase font-bold">Company</p>
+<ul class="flex flex-col gap-2">
+<li><a class="font-['Inter'] text-[0.6875rem] tracking-[0.05em] uppercase text-black/40 hover:text-black transition-colors" href="#">Sustainability</a></li>
+<li><a class="font-['Inter'] text-[0.6875rem] tracking-[0.05em] uppercase text-black/40 hover:text-black transition-colors" href="#">Legal</a></li>
+<li><a class="font-['Inter'] text-[0.6875rem] tracking-[0.05em] uppercase text-black/40 hover:text-black transition-colors" href="#">Privacy</a></li>
+</ul>
+</div>
+</div>
+<div class="md:self-end">
+<p class="font-['Inter'] text-[0.6875rem] tracking-[0.05em] uppercase text-black/20">© 2024 SUSTAINER VLAKWERK. ALL RIGHTS RESERVED.</p>
+</div>
+</div>
+</footer>
+</main>
+</body></html>

@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Sparkles, Shuffle, Moon, Square } from "lucide-react";
+import { useState } from "react";
+import { Shuffle, Moon, Eye, EyeOff } from "lucide-react";
 import {
   RenderConfig,
   RenderQuality,
@@ -21,6 +21,8 @@ import { FEATURE_OPTIONS } from "@/config/options";
 import { WOOD_OPTIONS } from "@/config/wood";
 import { BRICK_OPTIONS } from "@/config/bricks";
 import { cn } from "@/lib/utils";
+import { buildPrompt } from "@/lib/prompt-builder";
+import { selectBaseImage } from "@/lib/image-selector";
 
 interface ConfigPanelProps {
   config: RenderConfig;
@@ -60,25 +62,20 @@ export function ConfigPanel({
   };
 
   return (
-    <motion.aside
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.4, delay: 0.1 }}
-      className="w-[340px] shrink-0 border-r border-[#1a1a1a] bg-[#0e0e0e] overflow-y-auto flex flex-col"
-    >
-      <div className="flex-1 p-5 space-y-5">
+    <aside className="w-[340px] shrink-0 border-r border-black/5 bg-[#F4F3F3] overflow-y-auto flex flex-col">
+      <div className="flex-1 p-6 space-y-8">
         {/* Houses */}
-        <Section title="Woningen">
-          <div className="flex gap-1.5">
-            {([4, 5, 6, 7, 8] as NumberOfHouses[]).map((n) => (
+        <Section title="01 / WONINGEN">
+          <div className="flex gap-1">
+            {([2, 3, 4, 5, 6, 7, 8, 9, 10] as NumberOfHouses[]).map((n) => (
               <button
                 key={n}
                 onClick={() => updateGeometry("numberOfHouses", n)}
                 className={cn(
-                  "flex-1 h-9 rounded-lg text-sm font-medium transition-all duration-150 cursor-pointer",
+                  "flex-1 h-9 text-[0.6875rem] font-bold uppercase tracking-wide transition-all duration-150 cursor-pointer",
                   config.geometry.numberOfHouses === n
-                    ? "bg-indigo-500 text-white shadow-lg shadow-indigo-500/20"
-                    : "bg-white/5 text-white/50 hover:bg-white/10 hover:text-white/70"
+                    ? "bg-black text-white"
+                    : "bg-white text-black/40 hover:bg-black/5 hover:text-black/70"
                 )}
               >
                 {n}
@@ -88,7 +85,7 @@ export function ConfigPanel({
         </Section>
 
         {/* Width */}
-        <Section title={`Breedte — ${config.geometry.width.toFixed(1)}m`}>
+        <Section title={`02 / BREEDTE — ${config.geometry.width.toFixed(1)}M`}>
           <input
             type="range"
             min={4.0}
@@ -98,9 +95,9 @@ export function ConfigPanel({
             onChange={(e) => updateGeometry("width", parseFloat(e.target.value))}
             className="w-full cursor-pointer"
           />
-          <div className="flex justify-between text-xs text-white/25 -mt-0.5">
-            <span>4.0</span>
-            <span>7.3</span>
+          <div className="flex justify-between text-[0.6875rem] text-black/30 -mt-0.5 tracking-wide">
+            <span>4.0M</span>
+            <span>7.3M</span>
           </div>
         </Section>
 
@@ -119,17 +116,17 @@ export function ConfigPanel({
         </div>
 
         {/* Style */}
-        <Section title="Stijl">
+        <Section title="03 / STIJL">
           <div className="space-y-1">
             {STYLE_OPTIONS.map((s) => (
               <button
                 key={s.id}
                 onClick={() => onChange({ ...config, style: s.id as StylePreset })}
                 className={cn(
-                  "w-full text-left px-3 py-2 rounded-lg text-sm transition-all duration-150 cursor-pointer",
+                  "w-full text-left px-4 py-2.5 text-[0.8125rem] font-medium transition-all duration-150 cursor-pointer",
                   config.style === s.id
-                    ? "bg-indigo-500/15 text-indigo-300 border border-indigo-500/30"
-                    : "text-white/50 hover:bg-white/5 hover:text-white/70 border border-transparent"
+                    ? "bg-black text-white"
+                    : "bg-white text-black/50 hover:bg-black/5 hover:text-black/80"
                 )}
               >
                 {s.label}
@@ -140,17 +137,17 @@ export function ConfigPanel({
 
         {/* Wood type — only for timber styles */}
         {(config.style === "landelijk" || config.style === "biobased") && (
-          <Section title="Houttype">
+          <Section title="HOUTTYPE">
             <div className="space-y-1">
               {WOOD_OPTIONS.map((w) => (
                 <button
                   key={w.id}
                   onClick={() => onChange({ ...config, woodType: config.woodType === w.id ? undefined : w.id as WoodType })}
                   className={cn(
-                    "w-full text-left px-3 py-2 rounded-lg text-sm transition-all duration-150 cursor-pointer",
+                    "w-full text-left px-4 py-2.5 text-[0.8125rem] font-medium transition-all duration-150 cursor-pointer",
                     config.woodType === w.id
-                      ? "bg-indigo-500/15 text-indigo-300 border border-indigo-500/30"
-                      : "text-white/50 hover:bg-white/5 hover:text-white/70 border border-transparent"
+                      ? "bg-black text-white"
+                      : "bg-white text-black/50 hover:bg-black/5 hover:text-black/80"
                   )}
                 >
                   {w.label}
@@ -161,18 +158,18 @@ export function ConfigPanel({
         )}
 
         {/* Brick type — only for brick styles */}
-        {(config.style === "jaren-30" || config.style === "moderne-stadswoning" || config.style === "oud-hollands" || config.style === "industrieel" || config.style === "haags") && (
-          <Section title="Baksteentype">
+        {(config.style === "jaren-30" || config.style === "modern") && (
+          <Section title="BAKSTEENTYPE">
             <div className="space-y-1">
               {BRICK_OPTIONS.map((b) => (
                 <button
                   key={b.id}
                   onClick={() => onChange({ ...config, brickType: config.brickType === b.id ? undefined : b.id as BrickType })}
                   className={cn(
-                    "w-full text-left px-3 py-2 rounded-lg text-sm transition-all duration-150 cursor-pointer",
+                    "w-full text-left px-4 py-2.5 text-[0.8125rem] font-medium transition-all duration-150 cursor-pointer",
                     config.brickType === b.id
-                      ? "bg-indigo-500/15 text-indigo-300 border border-indigo-500/30"
-                      : "text-white/50 hover:bg-white/5 hover:text-white/70 border border-transparent"
+                      ? "bg-black text-white"
+                      : "bg-white text-black/50 hover:bg-black/5 hover:text-black/80"
                   )}
                 >
                   {b.label}
@@ -183,8 +180,8 @@ export function ConfigPanel({
         )}
 
         {/* Gutter */}
-        <Section title="Goottype">
-          <div className="flex gap-1.5">
+        <Section title="04 / GOOTTYPE">
+          <div className="flex gap-1">
             {GUTTER_OPTIONS.map((g) => (
               <Chip
                 key={g.id}
@@ -197,17 +194,17 @@ export function ConfigPanel({
         </Section>
 
         {/* Floor-line */}
-        <Section title="Verdiepingsovergang">
+        <Section title="05 / VERDIEPINGSOVERGANG">
           <div className="space-y-1">
             {FLOORLINE_OPTIONS.map((fl) => (
               <button
                 key={fl.id}
                 onClick={() => onChange({ ...config, floorLine: fl.id as FloorLineTreatment })}
                 className={cn(
-                  "w-full text-left px-3 py-2 rounded-lg text-sm transition-all duration-150 cursor-pointer",
+                  "w-full text-left px-4 py-2.5 text-[0.8125rem] font-medium transition-all duration-150 cursor-pointer",
                   config.floorLine === fl.id
-                    ? "bg-indigo-500/15 text-indigo-300 border border-indigo-500/30"
-                    : "text-white/50 hover:bg-white/5 hover:text-white/70 border border-transparent"
+                    ? "bg-black text-white"
+                    : "bg-white text-black/50 hover:bg-black/5 hover:text-black/80"
                 )}
               >
                 {fl.label}
@@ -217,7 +214,7 @@ export function ConfigPanel({
         </Section>
 
         {/* Features */}
-        <Section title="Extra">
+        <Section title="06 / EXTRA">
           <div className="flex flex-wrap gap-1.5">
             {FEATURE_OPTIONS.map((f) => (
               <Chip
@@ -231,176 +228,134 @@ export function ConfigPanel({
         </Section>
 
         {/* Nuance */}
-        <Section title="Nuance">
+        <Section title="07 / NUANCE">
           <textarea
             value={config.userNuance}
             onChange={(e) => onChange({ ...config, userNuance: e.target.value })}
             placeholder="Warmer, meer groen, strakker..."
-            className="w-full h-20 px-3 py-2 text-sm bg-white/5 border border-white/10 rounded-lg resize-none focus:outline-none focus:border-indigo-500/50 placeholder:text-white/20 text-white/80 transition-all"
+            className="w-full h-20 px-4 py-3 text-[0.8125rem] bg-white border border-black/5 resize-none focus:outline-none focus:border-black/30 placeholder:text-black/20 text-black/80 transition-all"
           />
         </Section>
       </div>
 
       {/* Generate buttons */}
-      <div className="p-5 pt-0 space-y-2">
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+      <PromptPreviewPanel config={config} />
+      <div className="p-6 pt-0 space-y-2">
+        <button
           onClick={() => onGenerate("hq", "google")}
           disabled={isGenerating}
           className={cn(
-            "w-full h-12 rounded-2xl text-sm font-semibold flex items-center justify-center gap-2.5 transition-all duration-300 cursor-pointer disabled:cursor-not-allowed",
+            "w-full py-4 text-[0.8125rem] font-bold uppercase tracking-[0.15em] transition-all duration-200 cursor-pointer disabled:cursor-not-allowed",
             isGenerating
-              ? "bg-indigo-500/20 text-indigo-300/60"
-              : "bg-gradient-to-r from-indigo-500 to-violet-600 text-white glow-button hover:from-indigo-400 hover:to-violet-500"
+              ? "bg-black/20 text-black/40"
+              : "bg-black text-white hover:bg-black/80"
           )}
         >
-          {isGenerating ? (
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-            >
-              <Sparkles className="w-5 h-5" />
-            </motion.div>
-          ) : (
-            <Sparkles className="w-5 h-5" />
-          )}
-          {isGenerating ? "Bezig..." : "Google Render"}
-        </motion.button>
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={() => onGenerate("hq", "bytedance")}
-          disabled={isGenerating}
-          className={cn(
-            "w-full h-12 rounded-2xl text-sm font-semibold flex items-center justify-center gap-2.5 transition-all duration-300 cursor-pointer disabled:cursor-not-allowed",
-            isGenerating
-              ? "bg-cyan-500/20 text-cyan-300/60"
-              : "bg-gradient-to-r from-cyan-500 to-teal-600 text-white glow-button hover:from-cyan-400 hover:to-teal-500"
-          )}
-        >
-          {isGenerating ? (
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-            >
-              <Sparkles className="w-5 h-5" />
-            </motion.div>
-          ) : (
-            <Sparkles className="w-5 h-5" />
-          )}
-          {isGenerating ? "Bezig..." : "ByteDance Render"}
-        </motion.button>
-        <div className="h-px bg-white/10 my-2" />
+          {isGenerating ? "Bezig..." : "Genereer Render"}
+        </button>
 
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+        <div className="h-px bg-black/5 my-2" />
+
+        <button
           onClick={() => onBatchGenerate("google")}
           disabled={isGenerating}
           className={cn(
-            "w-full h-12 rounded-2xl text-sm font-semibold flex items-center justify-center gap-2.5 transition-all duration-300 cursor-pointer disabled:cursor-not-allowed",
+            "w-full py-3 text-[0.75rem] font-bold uppercase tracking-[0.15em] flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer disabled:cursor-not-allowed",
             isGenerating
-              ? "bg-amber-500/20 text-amber-300/60"
-              : "bg-gradient-to-r from-amber-500 to-orange-600 text-white glow-button hover:from-amber-400 hover:to-orange-500"
+              ? "bg-black/10 text-black/30"
+              : "bg-white text-black border border-black/10 hover:bg-black/5"
           )}
         >
           {batchProgress ? (
             <>
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-              >
-                <Shuffle className="w-5 h-5" />
-              </motion.div>
+              <Shuffle className="w-4 h-4 animate-spin" />
               {batchProgress.current}/{batchProgress.total} Bezig...
             </>
           ) : (
             <>
-              <Shuffle className="w-5 h-5" />
-              10x Random Generate
+              <Shuffle className="w-4 h-4" />
+              10x Random
             </>
           )}
-        </motion.button>
+        </button>
 
-        <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          onClick={() => onBatchGenerate("bytedance")}
-          disabled={isGenerating}
-          className={cn(
-            "w-full h-12 rounded-2xl text-sm font-semibold flex items-center justify-center gap-2.5 transition-all duration-300 cursor-pointer disabled:cursor-not-allowed",
-            isGenerating
-              ? "bg-teal-500/20 text-teal-300/60"
-              : "bg-gradient-to-r from-teal-500 to-emerald-600 text-white glow-button hover:from-teal-400 hover:to-emerald-500"
-          )}
-        >
-          {batchProgress ? (
-            <>
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
-              >
-                <Shuffle className="w-5 h-5" />
-              </motion.div>
-              {batchProgress.current}/{batchProgress.total} Bezig...
-            </>
-          ) : (
-            <>
-              <Shuffle className="w-5 h-5" />
-              10x Random ByteDance
-            </>
-          )}
-        </motion.button>
-
-        <div className="h-px bg-white/10 my-2" />
+        <div className="h-px bg-black/5 my-2" />
 
         {overnightBatch && (overnightBatch.status === "running" || overnightBatch.status === "submitting" || overnightBatch.status === "polling") ? (
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+          <button
             onClick={onCancelOvernightBatch}
-            className="w-full h-12 rounded-2xl text-sm font-semibold flex items-center justify-center gap-2.5 transition-all duration-300 cursor-pointer bg-gradient-to-r from-purple-500/20 to-indigo-600/20 border border-purple-500/30 text-purple-300"
+            className="w-full py-3 text-[0.75rem] font-bold uppercase tracking-[0.15em] flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer bg-white text-black border border-black/10 hover:bg-black/5"
           >
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
-            >
-              <Moon className="w-5 h-5" />
-            </motion.div>
+            <Moon className="w-4 h-4 animate-spin" style={{ animationDuration: "3s" }} />
             <span className="flex flex-col items-start leading-tight">
               <span>
                 {overnightBatch.status === "submitting" ? "Indienen..." :
-                 overnightBatch.status === "polling" ? `Wachten op Google... (${overnightBatch.completed}/${overnightBatch.total})` :
+                 overnightBatch.status === "polling" ? `Wachten... (${overnightBatch.completed}/${overnightBatch.total})` :
                  `${overnightBatch.completed}/${overnightBatch.total} klaar`}
                 {overnightBatch.failed > 0 ? ` (${overnightBatch.failed} mislukt)` : ""}
               </span>
-              <span className="text-[10px] text-purple-400/60">Klik om te stoppen</span>
+              <span className="text-[0.625rem] text-black/30">Klik om te stoppen</span>
             </span>
-          </motion.button>
+          </button>
         ) : (
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
+          <button
             onClick={onStartOvernightBatch}
-            className={cn(
-              "w-full h-12 rounded-2xl text-sm font-semibold flex items-center justify-center gap-2.5 transition-all duration-300 cursor-pointer",
-              "bg-gradient-to-r from-purple-600 to-indigo-700 text-white glow-button hover:from-purple-500 hover:to-indigo-600"
-            )}
+            className="w-full py-3 text-[0.75rem] font-bold uppercase tracking-[0.15em] flex items-center justify-center gap-2 transition-all duration-200 cursor-pointer bg-white text-black border border-black/10 hover:bg-black/5"
           >
-            <Moon className="w-5 h-5" />
+            <Moon className="w-4 h-4" />
             50x Overnight Batch
-          </motion.button>
+          </button>
         )}
       </div>
-    </motion.aside>
+    </aside>
+  );
+}
+
+function PromptPreviewPanel({ config }: { config: RenderConfig }) {
+  const [showPrompt, setShowPrompt] = useState(false);
+
+  if (!showPrompt) {
+    return (
+      <div className="px-6 pb-2">
+        <button
+          onClick={() => setShowPrompt(true)}
+          className="w-full py-2 text-[0.6875rem] font-bold uppercase tracking-[0.15em] flex items-center justify-center gap-2 cursor-pointer text-black/30 hover:text-black/60 transition-colors"
+        >
+          <Eye className="w-3.5 h-3.5" />
+          Toon Prompt
+        </button>
+      </div>
+    );
+  }
+
+  let prompt: string;
+  try {
+    const baseImage = selectBaseImage(config.geometry);
+    prompt = buildPrompt(config, baseImage, "hq");
+  } catch (e) {
+    prompt = `Error building prompt: ${e instanceof Error ? e.message : "Unknown error"}`;
+  }
+
+  return (
+    <div className="px-6 pb-2">
+      <button
+        onClick={() => setShowPrompt(false)}
+        className="w-full py-2 text-[0.6875rem] font-bold uppercase tracking-[0.15em] flex items-center justify-center gap-2 cursor-pointer text-black/50 hover:text-black/80 transition-colors mb-2"
+      >
+        <EyeOff className="w-3.5 h-3.5" />
+        Verberg Prompt
+      </button>
+      <pre className="text-[0.6875rem] text-black/50 whitespace-pre-wrap bg-white border border-black/5 p-4 max-h-80 overflow-y-auto font-mono leading-relaxed">
+        {prompt}
+      </pre>
+    </div>
   );
 }
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="space-y-2">
-      <h3 className="text-[11px] font-semibold text-white/30 uppercase tracking-widest">
+    <div className="space-y-3">
+      <h3 className="text-[0.6875rem] font-bold text-black/40 uppercase tracking-[0.1em]">
         {title}
       </h3>
       {children}
@@ -413,10 +368,10 @@ function Chip({ label, active, onClick }: { label: string; active: boolean; onCl
     <button
       onClick={onClick}
       className={cn(
-        "px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-150 cursor-pointer",
+        "px-3 py-2 text-[0.75rem] font-medium transition-all duration-150 cursor-pointer",
         active
-          ? "bg-indigo-500/20 text-indigo-300 border border-indigo-500/30"
-          : "bg-white/5 text-white/40 hover:bg-white/10 hover:text-white/60 border border-transparent"
+          ? "bg-black text-white"
+          : "bg-white text-black/40 hover:bg-black/5 hover:text-black/70 border border-black/5"
       )}
     >
       {label}

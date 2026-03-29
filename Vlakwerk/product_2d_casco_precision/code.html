@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-container": "#d5d4d4",
+              "error": "#ba1a1a",
+              "inverse-surface": "#2f3131",
+              "surface-container-low": "#f4f3f3",
+              "on-surface-variant": "#474747",
+              "surface-bright": "#f9f9f9",
+              "on-tertiary-fixed": "#ffffff",
+              "on-tertiary": "#e2e2e2",
+              "on-tertiary-fixed-variant": "#e2e2e2",
+              "tertiary-fixed-dim": "#454747",
+              "on-secondary": "#ffffff",
+              "secondary-fixed-dim": "#acabab",
+              "on-background": "#1a1c1c",
+              "tertiary-fixed": "#5d5f5f",
+              "on-primary-container": "#ffffff",
+              "surface": "#f9f9f9",
+              "on-tertiary-container": "#ffffff",
+              "surface-variant": "#e2e2e2",
+              "error-container": "#ffdad6",
+              "inverse-on-surface": "#f1f1f1",
+              "inverse-primary": "#c6c6c6",
+              "surface-container-high": "#e8e8e8",
+              "tertiary-container": "#737575",
+              "outline-variant": "#c6c6c6",
+              "on-surface": "#1a1c1c",
+              "outline": "#777777",
+              "on-primary": "#e2e2e2",
+              "surface-tint": "#5e5e5e",
+              "secondary-fixed": "#c7c6c6",
+              "surface-container-lowest": "#ffffff",
+              "on-secondary-fixed-variant": "#3b3b3c",
+              "on-secondary-container": "#1b1c1c",
+              "tertiary": "#3a3c3c",
+              "on-error": "#ffffff",
+              "surface-dim": "#dadada",
+              "on-secondary-fixed": "#1b1c1c",
+              "surface-container": "#eeeeee",
+              "background": "#f9f9f9",
+              "on-error-container": "#410002",
+              "on-primary-fixed": "#ffffff",
+              "primary-fixed-dim": "#474747",
+              "primary-container": "#3b3b3b",
+              "primary": "#000000",
+              "secondary": "#5e5e5e",
+              "surface-container-highest": "#e2e2e2",
+              "primary-fixed": "#5e5e5e",
+              "on-primary-fixed-variant": "#e2e2e2"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0px", "lg": "0px", "xl": "0px", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            font-size: 1.25rem;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .ghost-border { outline: 1px solid rgba(198, 198, 198, 0.2); }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-black/10 dark:border-white/10">
+<div class="flex justify-between items-center w-full px-8 py-6 max-w-[1920px] mx-auto">
+<div class="text-lg font-black tracking-tighter text-black dark:text-white uppercase">SUSTAINER VLAKWERK</div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="font-['Inter'] tracking-tighter font-bold uppercase text-[0.875rem] text-black dark:text-white border-b border-black dark:border-white pb-1 transition-opacity Active: opacity-70" href="#">Product</a>
+<a class="font-['Inter'] tracking-tighter font-bold uppercase text-[0.875rem] text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors duration-300" href="#">Precision</a>
+<a class="font-['Inter'] tracking-tighter font-bold uppercase text-[0.875rem] text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors duration-300" href="#">TCO &amp; GO</a>
+<a class="font-['Inter'] tracking-tighter font-bold uppercase text-[0.875rem] text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors duration-300" href="#">Partnership</a>
+<a class="font-['Inter'] tracking-tighter font-bold uppercase text-[0.875rem] text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors duration-300" href="#">Contact</a>
+</div>
+<button class="md:hidden text-black dark:text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+<!-- SideNavBar (Technical Specs) -->
+<aside class="fixed right-0 h-full w-64 border-l border-black/5 dark:border-white/5 bg-[#F4F3F3] dark:bg-zinc-900 hidden xl:flex flex-col h-full pt-24 px-6 z-40">
+<div class="mb-12">
+<h3 class="font-['Inter'] text-[0.6875rem] tracking-[0.1em] uppercase font-medium text-black/50 dark:text-white/50 mb-1">TECHNICAL SPECS</h3>
+<p class="font-['Inter'] text-[0.875rem] font-bold tracking-tight text-black dark:text-white">Vlakwerk Precision Engine</p>
+</div>
+<div class="space-y-4">
+<div class="flex items-center gap-3 p-3 text-black dark:text-white bg-white dark:bg-black transition-transform Active: translate-x-1">
+<span class="material-symbols-outlined">architecture</span>
+<span class="font-['Inter'] text-[0.6875rem] tracking-[0.1em] uppercase font-medium">LVL 40mm</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-black/50 dark:text-white/50 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors">
+<span class="material-symbols-outlined">precision_manufacturing</span>
+<span class="font-['Inter'] text-[0.6875rem] tracking-[0.1em] uppercase font-medium">CNC-04</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-black/50 dark:text-white/50 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors">
+<span class="material-symbols-outlined">straighten</span>
+<span class="font-['Inter'] text-[0.6875rem] tracking-[0.1em] uppercase font-medium">Tolerance &lt;0.1mm</span>
+</div>
+<div class="flex items-center gap-3 p-3 text-black/50 dark:text-white/50 hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors">
+<span class="material-symbols-outlined">verified</span>
+<span class="font-['Inter'] text-[0.6875rem] tracking-[0.1em] uppercase font-medium">ISO-9001</span>
+</div>
+</div>
+</aside>
+<main class="pt-24 xl:pr-64">
+<!-- Hero / Section 1: The Physical Element -->
+<section class="min-h-screen flex flex-col px-8 md:px-16 lg:px-24 py-12 bg-surface">
+<div class="flex justify-between items-start mb-16">
+<div>
+<span class="text-[0.6875rem] tracking-[0.15em] uppercase font-bold text-outline mb-4 block">01 / MATERIALITY</span>
+<h1 class="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9] uppercase max-w-2xl">The Physical Element</h1>
+</div>
+<div class="hidden md:block text-right">
+<p class="text-[0.6875rem] tracking-[0.1em] uppercase font-medium max-w-[200px] leading-relaxed">High-performance Laminated Veneer Lumber (LVL) engineered for structural absolute.</p>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 flex-grow">
+<div class="md:col-span-8 relative overflow-hidden ghost-border">
+<img alt="LVL Wood Texture" class="w-full h-full object-cover grayscale contrast-125" data-alt="Macro close-up of laminated veneer lumber wood grain with visible precision-cut edges and industrial wood texture in neutral lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvic3HE-xVm0ugAg8HxK0C_8j4OPc8sXGaPPdPGjdZ9_PxQg976ZPp21Kv-tPjdEp-22_7SU5WXTYPA-m5A4klMkRCeU1MiRmca6oi5zyvv27G79fBUAQgN8cI0W04oIuCBnsxJPKzWun3k7U6sEhqKFSerDY1SYqg61uO_ugnJJ8t-qf2CFiyepDFG6nrFcUinq1dtUU9F6OCesj8v9_rCfG2ucVekWUgeA0vyzd-pQezu0lJId0us8woemOgeHjqEmn99V68coE"/>
+<div class="absolute bottom-6 left-6 bg-primary text-on-primary px-4 py-2 text-[0.6875rem] tracking-widest uppercase font-bold">
+                        LVL 40MM CORE
+                    </div>
+</div>
+<div class="md:col-span-4 flex flex-col justify-between gap-8">
+<div class="bg-surface-container-low p-8 ghost-border">
+<span class="material-symbols-outlined text-4xl mb-6">layers</span>
+<h3 class="text-xl font-bold uppercase tracking-tighter mb-4">Structural Density</h3>
+<p class="text-sm leading-relaxed text-on-surface-variant">40mm LVL provides superior strength-to-weight ratio compared to traditional CLT, enabling thinner floor profiles and larger spans without deflection.</p>
+</div>
+<div class="relative overflow-hidden ghost-border flex-grow">
+<img alt="CNC Detailing" class="w-full h-full object-cover grayscale opacity-80" data-alt="Extreme close-up of a robotic CNC drill bit carving precise circular grooves into a light-colored wood panel with sawdust particles" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4BcBWanXLO1LP6bcHDs6m1ZOjLMKZh8yhesLpXe9_kJBLGjRd6MnxhApt15DU6lZ7VsrQIB1CkRDh9N4jE_4mjcIbDcb8v4HhCvuvbmZEcGS3EKyVjVW7pLAOq1DJdPuRSPKlHwnqqWpp5Eg_eFCDnTEUNkjAQCVwApGo7GDLGY1F6_9UEwLRrT0bDgPewzYBnAZ-MqiWjKvf2-5T7CJjvCIhUgVkW86QClYg_gzcKttIibZ5U3oy9clFYXTRQiROLWZvPAC20WI"/>
+<div class="absolute inset-0 bg-primary/10 flex items-center justify-center">
+<span class="text-[0.6875rem] tracking-[0.2em] uppercase font-black text-white bg-black/50 px-4 py-2 backdrop-blur-sm">CNC ROUTED JOINTS</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Precision Engine -->
+<section class="min-h-screen bg-surface-container-low px-8 md:px-16 lg:px-24 py-24 border-y border-black/5">
+<div class="max-w-[1400px] mx-auto">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+<div>
+<span class="text-[0.6875rem] tracking-[0.15em] uppercase font-bold text-outline mb-6 block">02 / WORKFLOW</span>
+<h2 class="text-5xl md:text-7xl font-black tracking-tighter uppercase mb-8 leading-tight">Precision Engine</h2>
+<div class="space-y-8">
+<div class="border-l-2 border-primary pl-6">
+<h4 class="font-bold uppercase tracking-tight mb-2">The Digital Twin</h4>
+<p class="text-sm text-on-surface-variant max-w-md">Every element is modeled to 0.1mm accuracy before a single cut is made. The model is the machine instruction.</p>
+</div>
+<div class="border-l border-outline-variant pl-6">
+<h4 class="font-bold uppercase tracking-tight mb-2">Automated Optimization</h4>
+<p class="text-sm text-on-surface-variant max-w-md">Nesting algorithms ensure minimum material waste, achieving &gt;92% resource efficiency in every Casco element.</p>
+</div>
+<div class="pt-8">
+<button class="bg-primary text-on-primary px-8 py-4 uppercase text-[0.6875rem] font-black tracking-widest hover:bg-secondary transition-colors">
+                                    Explore the Engine
+                                </button>
+</div>
+</div>
+</div>
+<div class="relative aspect-square bg-white p-12 ghost-border">
+<!-- Abstract Grid/Diagram UI -->
+<div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: radial-gradient(#000 1px, transparent 1px); background-size: 20px 20px;"></div>
+<div class="relative h-full w-full border border-black/10 flex items-center justify-center overflow-hidden">
+<img alt="Technical Diagram" class="w-full h-full object-contain grayscale mix-blend-multiply" data-alt="A blueprint-style 3D wireframe render of a modular building component floating in a minimalist white space with technical axis lines" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6EyBGDYetSfGebX3xMR9mlQUf3f28xU7wOV0Ygl3y36DsJy2ArLyyVi4lDdnh-NoiD6bNOqUKQHJgyVNLaE4VeVLYUb86fE5GrAZ1OaUyxq5S-qBq5eCHXvaW2WOfyF2ShljyFZ43PXTtwpBQgDKGGWQxEK-j7jgSMU3dzuoGHPI2SiXBDwkiUiCun3-ptZu8kBmCjVpyk_NAalIw_4E0U1r03PODifhFqutU58EuUI-_Rt8cUcqX4aiKkCBSV3qgIP3M2V92rig"/>
+<!-- Overlay UI elements -->
+<div class="absolute top-4 left-4 flex gap-2">
+<div class="bg-black text-white text-[10px] px-2 py-1 uppercase font-mono">X: 4200.00</div>
+<div class="bg-black text-white text-[10px] px-2 py-1 uppercase font-mono">Y: 1200.00</div>
+</div>
+<div class="absolute bottom-4 right-4 text-[10px] font-mono text-black/40 uppercase">
+                                Model-to-Machine v4.02
+                            </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Installation Speed -->
+<section class="px-8 md:px-16 lg:px-24 py-24 bg-surface">
+<div class="mb-16 text-center max-w-3xl mx-auto">
+<span class="text-[0.6875rem] tracking-[0.15em] uppercase font-bold text-outline mb-4 block">03 / ASSEMBLY</span>
+<h2 class="text-5xl md:text-7xl font-black tracking-tighter uppercase mb-6">Installation Speed</h2>
+<p class="text-on-surface-variant leading-relaxed uppercase text-sm tracking-wide">From flatbed to finished floor in 14 minutes. Just-in-time logistics eliminates on-site storage and minimizes labor.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-1">
+<div class="group relative aspect-[4/5] overflow-hidden bg-zinc-200">
+<img alt="Just in time delivery" class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-700" data-alt="A flatbed truck carrying neatly stacked wooden building panels arriving at a modern construction site under a clear blue sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsBh3uFyQR3TKBBB_B9p5DrbBzj3vq1VXnyxTlTWnS_20v0Gbtpt9skxXl-7HmRYGBAhihFYRZkqmFp23E_gxgNx_LVWcUFik-327n7Iq23x_VPhmR-z4L5Y66SIlXJ0FDQzV0COEP7tYul6gauY3XKe82TZsQfqww5lXMPs1KO0SpGaRE8LIxthxvIeucfiCx1hzMc2Uaylwa0qM8OnyqI6ZWaA61IHQJfoh_fE3r-Sg3t1OroVHGNvfD5WTzQ7zgqdtwDmggYcI"/>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+<div class="absolute bottom-8 left-8">
+<span class="text-[0.6875rem] font-black text-white bg-black px-3 py-1 uppercase">08:00 AM</span>
+<h4 class="text-white font-bold uppercase mt-2">Logistics Arrival</h4>
+</div>
+</div>
+<div class="group relative aspect-[4/5] overflow-hidden bg-zinc-300">
+<img alt="Precision Mounting" class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-700" data-alt="A crane hoisting a large flat wooden floor panel into place on a steel frame structure with architectural precision" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOLsDrfPPQCKrcHiw0zUOlDIUG9_v8RouYtcHuwcDoS1ydCf_QbpUGcXQsYZ1M9_-4VVCaad6_oUu6CBrJ8Jxn11PNx4M_GO6OQ-wE3x2Pk64ytHsPzOOYSajO1VVXE29gzsLbYPyQpdOmCzJaruKvTLo2JiP7EqpIvC3V3LM8GHD_K5s84Aw7jyvF6YV0wfAfcM_gQiO6Z4NfLRusfqdjsegagWj52ztYjmPwMEU65qLCfqrpyYbAymmOcNqn2kt3POLWO-TC1CA"/>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+<div class="absolute bottom-8 left-8">
+<span class="text-[0.6875rem] font-black text-white bg-black px-3 py-1 uppercase">08:14 AM</span>
+<h4 class="text-white font-bold uppercase mt-2">Mounting Sequence</h4>
+</div>
+</div>
+<div class="group relative aspect-[4/5] overflow-hidden bg-zinc-400">
+<img alt="Immediate loading" class="w-full h-full object-cover grayscale group-hover:scale-105 transition-transform duration-700" data-alt="Interior of a newly installed wooden building structure with sunlight streaming through gaps in the unfinished shell" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZNbyN5PrTngR7khimuNwZhjJopp0S-oXrji_gMn4STfYgdTxnh58k64-KRwM8-DfuMVRPT_mHTIQTreh8VKyT590p3p5FbRsq66ydBANv480ffRus69AFJhsglF6ndZermyOeGVBHbjRPulycapWY7YkZ53pZWn4KeQH2U4Ravb41ttt2OByPcn2csXCUB3rUt99hOrYrBcQnYp4S0UylsDfdNeaUBr69eZNOr3waDOlfEoDfig5q7MdV_SOns-i93k59GBaVNT0"/>
+<div class="absolute inset-0 bg-black/20 group-hover:bg-black/0 transition-colors"></div>
+<div class="absolute bottom-8 left-8">
+<span class="text-[0.6875rem] font-black text-white bg-black px-3 py-1 uppercase">08:30 AM</span>
+<h4 class="text-white font-bold uppercase mt-2">Ready for Loading</h4>
+</div>
+</div>
+</div>
+</section>
+<!-- Technical Data Grid -->
+<section class="bg-black text-white px-8 md:px-16 lg:px-24 py-24">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-12 border-t border-white/10 pt-12">
+<div>
+<span class="text-[0.6875rem] tracking-[0.2em] font-mono text-white/40 block mb-4 uppercase">Spec 001</span>
+<h5 class="text-2xl font-black tracking-tighter uppercase mb-1">LVL 40mm</h5>
+<p class="text-xs text-white/60">Structural base thickness</p>
+</div>
+<div>
+<span class="text-[0.6875rem] tracking-[0.2em] font-mono text-white/40 block mb-4 uppercase">Spec 002</span>
+<h5 class="text-2xl font-black tracking-tighter uppercase mb-1">± 0.1mm</h5>
+<p class="text-xs text-white/60">CNC Manufacturing tolerance</p>
+</div>
+<div>
+<span class="text-[0.6875rem] tracking-[0.2em] font-mono text-white/40 block mb-4 uppercase">Spec 003</span>
+<h5 class="text-2xl font-black tracking-tighter uppercase mb-1">E=13.5 GPa</h5>
+<p class="text-xs text-white/60">Modulus of elasticity</p>
+</div>
+<div>
+<span class="text-[0.6875rem] tracking-[0.2em] font-mono text-white/40 block mb-4 uppercase">Spec 004</span>
+<h5 class="text-2xl font-black tracking-tighter uppercase mb-1">Type 2D</h5>
+<p class="text-xs text-white/60">Flat element classification</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-black/10 dark:border-white/10 bg-[#F9F9F9] dark:bg-black xl:pr-64">
+<div class="w-full px-8 py-12 flex flex-col md:flex-row justify-between items-start gap-8">
+<div class="max-w-sm">
+<div class="text-sm font-bold tracking-tighter uppercase mb-6">SUSTAINER VLAKWERK</div>
+<p class="font-['Inter'] text-[0.6875rem] tracking-[0.05em] uppercase text-black/40 dark:text-white/40 leading-relaxed">
+                    © 2024 SUSTAINER VLAKWERK. ALL RIGHTS RESERVED. HIGH-PRECISION BUILDING SYSTEMS FOR THE NEW ARCHITECTURAL STANDARD.
+                </p>
+</div>
+<div class="flex flex-wrap gap-x-12 gap-y-4">
+<div class="flex flex-col gap-2">
+<span class="text-[0.6875rem] font-black tracking-widest uppercase mb-2">Navigation</span>
+<a class="font-['Inter'] text-[0.6875rem] tracking-[0.05em] uppercase text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors" href="#">Sustainability</a>
+<a class="font-['Inter'] text-[0.6875rem] tracking-[0.05em] uppercase text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors" href="#">Technical Documentation</a>
+</div>
+<div class="flex flex-col gap-2">
+<span class="text-[0.6875rem] font-black tracking-widest uppercase mb-2">Legal</span>
+<a class="font-['Inter'] text-[0.6875rem] tracking-[0.05em] uppercase text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors" href="#">Legal</a>
+<a class="font-['Inter'] text-[0.6875rem] tracking-[0.05em] uppercase text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors" href="#">Privacy</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

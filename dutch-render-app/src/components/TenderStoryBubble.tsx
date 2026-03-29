@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { FileText, X, Copy, Check } from "lucide-react";
 import { RenderConfig } from "@/types";
 import { generateTenderStory } from "@/lib/tender-story";
@@ -54,10 +54,8 @@ export function TenderStoryBubble({ config }: TenderStoryBubbleProps) {
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0, opacity: 0 }}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
             onClick={() => setOpen(true)}
-            className="w-9 h-9 rounded-full bg-indigo-500/80 backdrop-blur-md border border-indigo-400/30 text-white flex items-center justify-center shadow-lg shadow-indigo-500/20 cursor-pointer hover:bg-indigo-500 transition-colors"
+            className="w-9 h-9 bg-black text-white flex items-center justify-center cursor-pointer hover:bg-black/80 transition-colors"
             title="Tenderverhaal bekijken"
           >
             <FileText className="w-4 h-4" />
@@ -69,32 +67,30 @@ export function TenderStoryBubble({ config }: TenderStoryBubbleProps) {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: -10, originX: 1, originY: 0 }}
+            initial={{ opacity: 0, scale: 0.95, y: -10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: -10 }}
+            exit={{ opacity: 0, scale: 0.95, y: -10 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="absolute top-0 right-0 w-[420px] max-h-[70vh] bg-[#111111]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl shadow-black/60 flex flex-col overflow-hidden"
+            className="absolute top-0 right-0 w-[420px] max-h-[70vh] bg-white border border-black/10 shadow-[0_20px_40px_rgba(0,0,0,0.04)] flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-white/5 shrink-0">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-black/5 shrink-0">
               <div className="flex items-center gap-2">
-                <div className="w-6 h-6 rounded-full bg-indigo-500/20 flex items-center justify-center">
-                  <FileText className="w-3.5 h-3.5 text-indigo-400" />
-                </div>
-                <span className="text-xs font-semibold text-white/70 uppercase tracking-wider">
+                <FileText className="w-3.5 h-3.5 text-black/40" />
+                <span className="text-[0.6875rem] font-bold text-black/50 uppercase tracking-[0.1em]">
                   Tenderverhaal
                 </span>
               </div>
               <div className="flex items-center gap-1">
                 <button
                   onClick={handleCopy}
-                  className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-[11px] font-medium text-white/50 hover:text-white/80 hover:bg-white/5 transition-all cursor-pointer"
+                  className="flex items-center gap-1.5 px-2.5 py-1.5 text-[0.6875rem] font-medium text-black/40 hover:text-black/70 hover:bg-black/5 transition-all cursor-pointer"
                   title="Kopieer naar klembord"
                 >
                   {copied ? (
                     <>
-                      <Check className="w-3 h-3 text-emerald-400" />
-                      <span className="text-emerald-400">Gekopieerd</span>
+                      <Check className="w-3 h-3 text-black" />
+                      <span className="text-black">Gekopieerd</span>
                     </>
                   ) : (
                     <>
@@ -105,7 +101,7 @@ export function TenderStoryBubble({ config }: TenderStoryBubbleProps) {
                 </button>
                 <button
                   onClick={() => setOpen(false)}
-                  className="w-7 h-7 rounded-lg flex items-center justify-center text-white/40 hover:text-white/70 hover:bg-white/5 transition-all cursor-pointer"
+                  className="w-7 h-7 flex items-center justify-center text-black/30 hover:text-black/70 hover:bg-black/5 transition-all cursor-pointer"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
@@ -113,14 +109,13 @@ export function TenderStoryBubble({ config }: TenderStoryBubbleProps) {
             </div>
 
             {/* Story content */}
-            <div className="flex-1 overflow-y-auto px-5 py-4 text-[13px] leading-relaxed text-white/75">
+            <div className="flex-1 overflow-y-auto px-5 py-4 text-[0.8125rem] leading-relaxed text-black/60">
               {story.split("\n\n").map((paragraph, i) => {
-                // First line is the title
                 if (i === 0) {
                   return (
                     <h3
                       key={i}
-                      className="text-sm font-semibold text-white/90 mb-4"
+                      className="text-[0.875rem] font-bold text-black/80 mb-4 uppercase tracking-tight"
                     >
                       {paragraph}
                     </h3>

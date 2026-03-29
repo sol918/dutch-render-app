@@ -1,10 +1,6 @@
 import { readFile } from "fs/promises";
 import path from "path";
 import { GreyVolumeImage, RenderConfig, RenderEngine, RenderQuality } from "@/types";
-import { STYLE_CONFIGS } from "@/config/styles";
-import { FLOORLINE_CONFIGS } from "@/config/floorline";
-import { GUTTER_CONFIGS } from "@/config/gutters";
-import { FEATURE_CONFIGS } from "@/config/options";
 
 function getProvider(): "gemini" | "pollinations" {
   return (process.env.IMAGE_PROVIDER as "gemini" | "pollinations") || "pollinations";
@@ -97,19 +93,112 @@ async function callGeminiOnce(
   return null;
 }
 
+// ─── Refine Render (second-pass correction) ───
+
+export async function refineRender(
+  baseImageBase64: string,
+  renderImageBase64: string,
+  refinePrompt: string,
+): Promise<string | null> {
+  const apiKey = process.env.GEMINI_API_KEY;
+  if (!apiKey) throw new Error("GEMINI_API_KEY environment variable is not set");
+
+  const model = MODEL_HQ;
+  const MAX_ATTEMPTS = 3;
+
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+    console.log(`[Gemini Refine] Attempt ${attempt}/${MAX_ATTEMPTS}...`);
+
+    const image = await callGeminiRefine(apiKey, baseImageBase64, renderImageBase64, refinePrompt, model).catch((err) => {
+      if (err?.message === "QUOTA_EXCEEDED") throw err;
+      if (err?.message === "MODEL_OVERLOADED") {
+        console.warn(`[Gemini Refine] Model overloaded, retrying in 3s...`);
+        return new Promise<null>((resolve) => setTimeout(() => resolve(null), 3000));
+      }
+      console.warn(`[Gemini Refine] Attempt ${attempt} failed:`, err?.message);
+      return null;
+    });
+
+    if (image) {
+      console.log(`[Gemini Refine] Got refined image on attempt ${attempt}`);
+      return image;
+    }
+  }
+
+  return null;
+}
+
+async function callGeminiRefine(
+  apiKey: string,
+  baseImageBase64: string,
+  renderImageBase64: string,
+  prompt: string,
+  model: string
+): Promise<string | null> {
+  const url = `${GEMINI_BASE_URL}/${model}:generateContent?key=${apiKey}`;
+
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 120_000);
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    signal: controller.signal,
+    body: JSON.stringify({
+      contents: [{
+        parts: [
+          { inlineData: { mimeType: "image/png", data: baseImageBase64 } },
+          { inlineData: { mimeType: "image/jpeg", data: renderImageBase64 } },
+          { text: prompt },
+        ],
+      }],
+      generationConfig: {
+        responseModalities: ["IMAGE", "TEXT"],
+      },
+    }),
+  }).finally(() => clearTimeout(timeout));
+
+  if (!response.ok) {
+    if (response.status === 429) throw new Error("QUOTA_EXCEEDED");
+    if (response.status === 503) throw new Error("MODEL_OVERLOADED");
+    const errorText = await response.text();
+    console.warn(`[Gemini Refine] API error (${response.status}):`, errorText.substring(0, 200));
+    return null;
+  }
+
+  const data: GeminiResponse = await response.json();
+  if (data.error) {
+    console.warn("[Gemini Refine] Error:", data.error.message);
+    return null;
+  }
+
+  if (data.candidates) {
+    for (const candidate of data.candidates) {
+      if (candidate.content?.parts) {
+        for (const part of candidate.content.parts) {
+          if (part.inlineData?.data) {
+            return `data:${part.inlineData.mimeType};base64,${part.inlineData.data}`;
+          }
+        }
+      }
+    }
+  }
+
+  console.warn("[Gemini Refine] Text-only response, no image");
+  return null;
+}
+
 // ─── Batch Generate (batchGenerateContent) ───
+// Uses the Gemini Batch API which is 50% cheaper than real-time.
+// All requests are submitted as a single batch job and processed asynchronously.
+// Docs: https://ai.google.dev/gemini-api/docs/batch-api
 
 interface BatchRequest {
   imageBase64: string;
   prompt: string;
 }
 
-interface BatchGeminiResponse {
-  responses?: Array<GeminiResponse>;
-  error?: { message: string };
-}
-
-// Submit a batch job — returns the batch operation name to poll
+// Submit a batch job — returns the batch name (e.g. "batches/abc123") to poll
 export async function submitBatchJob(
   requests: BatchRequest[],
 ): Promise<string> {
@@ -121,7 +210,7 @@ export async function submitBatchJob(
 
   const body = {
     batch: {
-      display_name: `batch-${Date.now()}`,
+      display_name: `vlakwerk-batch-${Date.now()}`,
       input_config: {
         requests: {
           requests: requests.map((req, i) => ({
@@ -143,7 +232,9 @@ export async function submitBatchJob(
     },
   };
 
-  console.log(`[Gemini Batch] Submitting batch with ${requests.length} requests...`);
+  console.log(`[Gemini Batch] Submitting batch with ${requests.length} requests to ${model}...`);
+  const payloadSize = JSON.stringify(body).length;
+  console.log(`[Gemini Batch] Payload size: ${(payloadSize / 1024 / 1024).toFixed(1)}MB`);
 
   const response = await fetch(url, {
     method: "POST",
@@ -164,7 +255,7 @@ export async function submitBatchJob(
   const data = await response.json();
   console.log(`[Gemini Batch] Batch submitted. Response:`, JSON.stringify(data).substring(0, 500));
 
-  // The response should contain the batch name/operation to poll
+  // Response returns an operation with name like "batches/abc123"
   const batchName = data.name || data.batch?.name;
   if (!batchName) {
     throw new Error(`Batch submitted but no batch name returned. Response: ${JSON.stringify(data).substring(0, 300)}`);
@@ -182,7 +273,7 @@ export async function pollBatchJob(batchName: string): Promise<{
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) throw new Error("GEMINI_API_KEY environment variable is not set");
 
-  // Poll the batch operation
+  // GET the batch status — batchName is like "batches/abc123"
   const url = `https://generativelanguage.googleapis.com/v1beta/${batchName}?key=${apiKey}`;
 
   const response = await fetch(url, {
@@ -192,7 +283,6 @@ export async function pollBatchJob(batchName: string): Promise<{
   if (!response.ok) {
     const errorText = await response.text();
     console.warn(`[Gemini Batch] Poll error (${response.status}):`, errorText.substring(0, 300));
-    // Don't treat poll errors as fatal — could be a transient network issue
     return { done: false, results: [] };
   }
 
@@ -201,37 +291,40 @@ export async function pollBatchJob(batchName: string): Promise<{
   const stats = data.metadata?.batchStats || {};
   console.log(`[Gemini Batch] Poll state: ${batchState}, stats:`, JSON.stringify(stats));
 
-  // Check states — uses BATCH_STATE_* prefix per the API
-  const isDone = batchState === "BATCH_STATE_SUCCEEDED" || batchState === "JOB_STATE_SUCCEEDED" || batchState === "SUCCEEDED";
-  const isFailed = batchState === "BATCH_STATE_FAILED" || batchState === "JOB_STATE_FAILED" || batchState === "FAILED" || batchState === "BATCH_STATE_CANCELLED";
-
-  if (isFailed) {
+  // Terminal failure states
+  const failStates = new Set([
+    "BATCH_STATE_FAILED", "JOB_STATE_FAILED",
+    "BATCH_STATE_CANCELLED", "JOB_STATE_CANCELLED",
+    "BATCH_STATE_EXPIRED", "JOB_STATE_EXPIRED",
+  ]);
+  if (failStates.has(batchState)) {
     return { done: true, results: [], error: data.error?.message || `Batch job failed (${batchState})` };
   }
 
-  if (!isDone) {
+  // Success states
+  const doneStates = new Set([
+    "BATCH_STATE_SUCCEEDED", "JOB_STATE_SUCCEEDED",
+  ]);
+  if (!doneStates.has(batchState)) {
     return { done: false, results: [] };
   }
 
-  // Batch is done — fetch the results
-  // The response may contain an output_config or we may need to list batch results
-  console.log(`[Gemini Batch] Batch done! Full response keys:`, Object.keys(data));
-  console.log(`[Gemini Batch] Full response (truncated):`, JSON.stringify(data).substring(0, 2000));
-
-  // Try to extract results from various possible response formats
+  // Batch succeeded — extract images from inlined responses
+  console.log(`[Gemini Batch] Batch done! Extracting results...`);
   const results: (string | null)[] = [];
 
-  // Actual Gemini batch API format: data.response.inlinedResponses.inlinedResponses[]
-  const responses = data.response?.inlinedResponses?.inlinedResponses
+  // Actual response structure from the API:
+  // data.metadata.output.inlinedResponses.inlinedResponses[].response.candidates[].content.parts[]
+  const inlined = data.metadata?.output?.inlinedResponses?.inlinedResponses
+    || data.response?.inlinedResponses?.inlinedResponses
     || data.response?.inlinedResponses
-    || data.response?.responses
-    || data.responses
     || [];
-  const responseList = Array.isArray(responses) ? responses : [];
+  const responseList = Array.isArray(inlined) ? inlined : [];
 
-  for (const resp of responseList) {
+  for (const entry of responseList) {
     let found: string | null = null;
-    const responseObj = resp.response || resp;
+    // Each entry has: { response: { candidates: [{ content: { parts: [...] } }] } }
+    const responseObj = entry.response || entry.output?.response || entry;
     const candidates = responseObj.candidates || [];
     for (const candidate of candidates) {
       const parts = candidate.content?.parts || [];
@@ -397,179 +490,6 @@ async function generateWithImagen(
   throw new Error("Geen afbeelding ontvangen van Imagen. Probeer het opnieuw.");
 }
 
-// ─── ByteDance (SeedDream) ───
-
-const BYTEDANCE_BASE_URL = "https://ark.ap-southeast.bytepluses.com/api/v3/images/generations";
-
-interface ByteDanceResponse {
-  data?: Array<{
-    b64_json?: string;
-    url?: string;
-  }>;
-  error?: { message: string; code: string };
-}
-
-async function callByteDanceOnce(
-  apiKey: string,
-  prompt: string,
-  model: string,
-  imageBase64: string
-): Promise<string | null> {
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 120_000);
-
-  const imageDataUri = `data:image/png;base64,${imageBase64}`;
-
-  const requestBody = {
-    model,
-    prompt,
-    image: imageDataUri,
-    sequential_image_generation: "disabled",
-    size: "2K",
-    response_format: "b64_json",
-    watermark: false,
-  };
-
-  console.log(`[ByteDance] Calling API with model=${model}, prompt length=${prompt.length}, image provided=true`);
-
-  const response = await fetch(BYTEDANCE_BASE_URL, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${apiKey}`,
-    },
-    signal: controller.signal,
-    body: JSON.stringify(requestBody),
-  }).finally(() => clearTimeout(timeout));
-
-  if (!response.ok) {
-    const errorText = await response.text();
-    console.warn(`[ByteDance] API error (${response.status}):`, errorText.substring(0, 500));
-    if (response.status === 429) throw new Error("QUOTA_EXCEEDED");
-    if (response.status === 503) throw new Error("MODEL_OVERLOADED");
-    return null;
-  }
-
-  const data: ByteDanceResponse = await response.json();
-  console.log(`[ByteDance] Response keys:`, Object.keys(data));
-
-  if (data.error) {
-    console.warn("[ByteDance] Error:", data.error.message);
-    return null;
-  }
-
-  if (data.data) {
-    for (const item of data.data) {
-      if (item.b64_json) {
-        return `data:image/png;base64,${item.b64_json}`;
-      }
-      if (item.url) {
-        // Fetch the image from URL and convert to data URL
-        console.log(`[ByteDance] Fetching image from URL...`);
-        const imgRes = await fetch(item.url);
-        const imgBuf = Buffer.from(await imgRes.arrayBuffer());
-        return `data:image/png;base64,${imgBuf.toString("base64")}`;
-      }
-    }
-  }
-
-  console.warn("[ByteDance] No image in response. Full response:", JSON.stringify(data).substring(0, 500));
-  return null;
-}
-
-function buildByteDancePrompt(config: RenderConfig, baseImage: GreyVolumeImage): string {
-  const style = STYLE_CONFIGS[config.style];
-  const gutter = GUTTER_CONFIGS[config.gutterType];
-  const floorLine = FLOORLINE_CONFIGS[config.floorLine];
-  const geo = baseImage;
-
-  const brickStyles = new Set(["jaren-30", "moderne-stadswoning", "oud-hollands", "industrieel"]);
-  const isTimber = config.style === "landelijk" || config.style === "biobased";
-  const skipFloorLine = brickStyles.has(config.style) && config.floorLine === "bijna-onzichtbaar";
-  const subtleTimberFloorLine = isTimber && config.floorLine === "bijna-onzichtbaar";
-
-  const featuresText = config.optionalFeatures.length > 0
-    ? config.optionalFeatures.map((f) => FEATURE_CONFIGS[f].promptText).join(", ")
-    : "";
-
-  const nuance = config.userNuance.trim();
-
-  // Determine the primary facade material from style
-  const isTimberStyle = config.style === "landelijk" || config.style === "biobased";
-  const materialRule = isTimberStyle
-    ? "The facade material is timber cladding. Use the SAME timber cladding continuously from ground level to the roofline on every house. Do NOT use plaster, render, or stucco anywhere on the facade. Do NOT switch to a different material below the floor-line — timber runs all the way down to ground level."
-    : "The facade material is small-format Dutch brick (waalformaat, approximately 210x50mm face size). Use the SAME brick continuously from ground level to the roofline on every house. Do NOT use plaster, render, stucco, or large-format bricks anywhere. Do NOT switch to a different material above or below the floor-line — it is all one continuous brick surface.";
-
-  // Roof material
-  const isSedum = config.style === "biobased";
-  const roofRule = isSedum
-    ? "The roof is covered entirely in sedum (green living roof). Use ONLY sedum — do not mix with clay tiles, slate, or solar panels unless explicitly requested."
-    : "The roof is covered entirely in dark Dutch clay pan tiles or slate tiles. Use ONE uniform roof material across the entire roof surface. Do NOT mix different roofing materials — no patches of sedum, no random solar panels, no mixing tiles with metal.";
-
-  // Floor-line instruction
-  let floorLineRule: string;
-  if (skipFloorLine) {
-    floorLineRule = "IGNORE the floor transition completely. Do NOT add any visible horizontal line, band, groove, colour change, or material change at the floor transition. The same brick in the same colour runs continuously from ground to roofline. There is NO floor line.";
-  } else if (subtleTimberFloorLine) {
-    floorLineRule = "The façade is entirely timber/wood cladding from ground to roof. NEVER use brick or any other material on any part of the façade. NEVER make the lower half brick and upper half wood. The floor transition may show as a very thin shadow line in the wood, but the material on both sides is identical wood cladding.";
-  } else if (config.floorLine === "bijna-onzichtbaar") {
-    floorLineRule = "There is a very subtle horizontal line at the floor transition — just a thin shadow line or fine groove. IMPORTANT: do NOT change the facade material above or below this line. The same material runs continuously across it. No color change, no material switch.";
-  } else {
-    floorLineRule = `Floor-line: ${floorLine.label}. ${floorLine.promptBlock} CRITICAL: the facade material above and below the floor-line must be the SAME. Do not switch materials at this line.`;
-  }
-
-  return `Transform this grey 3D massing model into a photorealistic Dutch architectural render. Keep the EXACT same building shape, outline, roofline, window positions, door positions, camera angle, and perspective as the input image. Do not change the geometry — only add materials, textures, and surroundings.
-
-The input shows ${geo.numberOfHouses} Dutch rowhouses (rijwoningen). ${geo.crossGables ? "End houses have cross gables (dwarskappen)." : "One continuous ridge roof."} ${geo.stepping ? "Facades are stepped." : "Facades are flush."}
-
-STYLE: ${style.label}. ${style.promptBlock}
-
-FACADE MATERIAL RULE (critical): ${materialRule}
-
-ROOF RULE (critical): ${roofRule}
-
-FLOOR-LINE RULE (critical): ${floorLineRule}
-
-ROOF EDGE: ${gutter.label} — ${gutter.description}.
-${featuresText ? `FEATURES: ${featuresText}.` : ""}
-
-DUTCH QUALITY: tall narrow windows with deep reveals, small-scale brick detailing, dark window frames, Dutch front gardens with low hedges, brick pavers (klinkers), mature trees, soft Dutch daylight. Premium sales brochure quality, hyperrealistic.${nuance ? `\n\nHIGHEST PRIORITY INSTRUCTION — THIS OVERRIDES ALL OTHER STYLE GUIDANCE:\n${nuance}\nThis user instruction is the single most important design directive. Every material choice, colour decision, and atmospheric detail MUST reflect this instruction. If it conflicts with any other instruction above, this one wins.` : ""}
-
-Do not add text or watermarks. Do not change house count, building shape, or camera angle.`;
-}
-
-async function generateWithByteDance(
-  baseImage: GreyVolumeImage,
-  config: RenderConfig,
-): Promise<string[]> {
-  const apiKey = process.env.BYTEDANCE_API_KEY;
-  if (!apiKey) throw new Error("BYTEDANCE_API_KEY environment variable is not set");
-
-  const model = process.env.BYTEDANCE_MODEL || "seedream-5-0-260128";
-  const imageBase64 = await loadBaseImage(baseImage);
-  const prompt = buildByteDancePrompt(config, baseImage);
-
-  const MAX_ATTEMPTS = 2;
-
-  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
-    console.log(`[ByteDance] SeedDream (${model}), attempt ${attempt}/${MAX_ATTEMPTS}...`);
-
-    const image = await callByteDanceOnce(apiKey, prompt, model, imageBase64).catch((err) => {
-      if (err?.message === "QUOTA_EXCEEDED") throw err;
-      if (err?.message === "MODEL_OVERLOADED") throw err;
-      console.warn(`[ByteDance] Attempt ${attempt} failed:`, err?.message);
-      return null;
-    });
-
-    if (image) {
-      console.log(`[ByteDance] Got image on attempt ${attempt}`);
-      return [image];
-    }
-  }
-
-  throw new Error("Geen afbeelding ontvangen van ByteDance. Probeer het opnieuw.");
-}
-
 // ─── Pollinations ───
 
 async function generateWithPollinations(
@@ -601,8 +521,6 @@ export async function generateRender(
   engine: RenderEngine = "google",
   config?: RenderConfig
 ): Promise<string[]> {
-  if (engine === "bytedance" && config) return generateWithByteDance(baseImage, config);
-
   const provider = getProvider();
   if (provider === "gemini") return generateWithGemini(baseImage, prompt, quality);
   return generateWithPollinations(baseImage, prompt);
