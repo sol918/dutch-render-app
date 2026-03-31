@@ -16,7 +16,7 @@ const DEFAULT_CONFIG: RenderConfig = {
     crossGables: false,
     stepping: false,
   },
-  style: "jaren-30",
+  style: "landelijk",
   gutterType: "overstek",
   floorLine: "architectonisch-opgelost",
   optionalFeatures: [],
@@ -51,20 +51,27 @@ export default function Home() {
           }
         }
 
-        // Reload renders to pick up new images
+        // Reload renders to pick up new batch images — merge, don't replace
         if (state.completed > 0) {
           const rendersRes = await fetch("/api/renders");
           const rendersData = await rendersRes.json();
           if (rendersData.renders?.length > 0) {
-            const loaded: GeneratedVariant[] = rendersData.renders.map(
+            const newRenders: GeneratedVariant[] = rendersData.renders.map(
               (r: { id: string; imageFilename: string; config?: RenderConfig }) => ({
                 id: r.id,
                 imageUrl: `/api/generated-image/${r.imageFilename}`,
                 config: r.config,
               })
             );
-            setAllVariants(loaded);
-            setSelectedVariantId(loaded[loaded.length - 1].id);
+            setAllVariants((prev) => {
+              // Merge: keep existing entries (which may have cache-busted URLs from refine),
+              // only add genuinely new ones
+              const existingIds = new Set(prev.map((v) => v.id));
+              const added = newRenders.filter((r) => !existingIds.has(r.id));
+              if (added.length === 0) return prev;
+              return [...prev, ...added];
+            });
+            setSelectedVariantId((prev) => prev ?? newRenders[newRenders.length - 1].id);
           }
         }
       } catch { /* ignore */ }
@@ -232,6 +239,11 @@ export default function Home() {
   const [batchProgress, setBatchProgress] = useState<{ current: number; total: number } | null>(null);
   const [galleryExpanded, setGalleryExpanded] = useState(false);
   const [isRefining, setIsRefining] = useState(false);
+  const [refineComparison, setRefineComparison] = useState<{
+    originalUrl: string;
+    refinedUrl: string;
+    variantId: string;
+  } | null>(null);
 
   const handleRefine = useCallback(async () => {
     if (!selectedVariant?.config || isRefining || isGenerating) return;
@@ -252,30 +264,34 @@ export default function Home() {
       const data = await response.json();
 
       if (data.success && data.imageUrl) {
-        // Save the refined image to disk, reusing the same id
-        const variantId = selectedVariant.id;
+        // Save the refined image as a new entry
+        const refinedId = `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
         const saved = await fetch("/api/renders", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            id: variantId,
+            id: refinedId,
             imageUrl: data.imageUrl,
             config: selectedVariant.config,
           }),
         }).then((r) => r.json()).catch(() => null);
 
-        const newUrl = saved?.imageFilename
-          ? `/api/generated-image/${saved.imageFilename}`
+        const refinedUrl = saved?.imageFilename
+          ? `/api/generated-image/${saved.imageFilename}?t=${Date.now()}`
           : data.imageUrl;
 
-        // Replace the existing variant in-place
-        setAllVariants((prev) =>
-          prev.map((v) =>
-            v.id === variantId
-              ? { ...v, imageUrl: `${newUrl}?t=${Date.now()}` }
-              : v
-          )
-        );
+        // Show comparison — let user choose
+        setRefineComparison({
+          originalUrl: selectedVariant.imageUrl,
+          refinedUrl,
+          variantId: selectedVariant.id,
+        });
+
+        // Add refined as new variant (but don't select it yet — comparison UI handles that)
+        setAllVariants((prev) => [
+          ...prev,
+          { id: refinedId, imageUrl: refinedUrl, config: selectedVariant.config },
+        ]);
       } else {
         setError(data.error ?? "Verfijning mislukt");
       }
@@ -285,6 +301,20 @@ export default function Home() {
       setIsRefining(false);
     }
   }, [selectedVariant, isRefining, isGenerating]);
+
+  const handleRefineChoice = useCallback((choice: "original" | "refined") => {
+    if (!refineComparison) return;
+    if (choice === "refined") {
+      // Select the last added variant (the refined one)
+      setAllVariants((prev) => {
+        const refined = prev[prev.length - 1];
+        if (refined) setSelectedVariantId(refined.id);
+        return prev;
+      });
+    }
+    // If "original", just dismiss — current selection stays
+    setRefineComparison(null);
+  }, [refineComparison]);
 
   const generateRandomConfig = useCallback((): RenderConfig => {
     // Weighted random picker
@@ -458,6 +488,8 @@ export default function Home() {
               isRefining={isRefining}
               error={error}
               onRefine={handleRefine}
+              refineComparison={refineComparison}
+              onRefineChoice={handleRefineChoice}
             />
           )}
 

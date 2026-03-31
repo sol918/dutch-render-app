@@ -114,7 +114,15 @@ function buildFloorLineBlock(
 ): string {
   if (brickSubtleFloorLine) {
     return `Floor-line treatment: ALMOST INVISIBLE.
-The façade is entirely the SAME brick from ground to roofline — identical colour, identical bond pattern, identical mortar everywhere. The ONLY indication of the floor transition is a single horizontal mortar joint (voeg) that is maybe 1-2mm wider than the other joints, or has a mortar colour that is just 5% different from the rest. This difference must be so subtle that you would need to stand close and look carefully to notice it. From a normal viewing distance it should be practically invisible. Do NOT change the brick colour above vs below. Do NOT change the bond pattern. Do NOT add any band, stripe, ledge, or course change. Do NOT make the mortar joint visually prominent — it should be nearly indistinguishable from any other mortar joint in the wall. The brick wall must look like one continuous, uninterrupted surface. If the floor line is obvious or eye-catching in any way, you have made it TOO prominent.`;
+The façade is entirely the SAME brick from ground to roofline — identical colour, identical bond pattern, identical texture everywhere. Every single brick must be the same colour — there must be NO row or course of bricks that looks different from the rest.
+
+The ONLY indication of the floor transition is in the MORTAR (voeg/specie), not the bricks: one single horizontal mortar joint may be 1-2mm wider or have a mortar tone that is 5% different from surrounding joints. The BRICKS on either side of this joint must be identical to all other bricks on the wall.
+
+COMMON ERROR TO AVOID: Gemini often makes one horizontal course/row of bricks a slightly different colour (darker, lighter, or a different hue) — this is WRONG. The bricks themselves must never change colour. Only the thin mortar line between bricks may be subtly different.
+
+FLOOR-LINE HEIGHT: This subtle mortar joint must be at exactly 3.0m — approximately 20-30cm ABOVE the tops of the ground-floor windows. NOT at the window heads, NOT just under the windows. There must be visible brickwork between the window tops and the floor-line.
+
+Do NOT change the brick colour above vs below. Do NOT change the bond pattern. Do NOT add any band, stripe, ledge, or course change. The brick wall must look like one continuous, uninterrupted surface.`;
   }
 
   if (subtleTimberFloorLine) {

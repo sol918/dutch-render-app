@@ -43,35 +43,42 @@ body {
 
 /* Range slider */
 input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  height: 2px;
-  background: #C6C6C6;
-  border-radius: 0;
-  outline: none;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  height: 2px !important;
+  background: #C6C6C6 !important;
+  border-radius: 0 !important;
+  outline: none !important;
   accent-color: #000000;
 }
 
 input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 12px;
-  height: 12px;
-  background: #000000;
-  border-radius: 0;
-  cursor: pointer;
-  border: none;
-  box-shadow: none;
+  -webkit-appearance: none !important;
+  appearance: none !important;
+  width: 14px !important;
+  height: 14px !important;
+  background: #000000 !important;
+  border-radius: 0 !important;
+  cursor: pointer !important;
+  border: none !important;
+  box-shadow: none !important;
+  margin-top: -6px;
 }
 
 input[type="range"]::-moz-range-thumb {
-  width: 12px;
-  height: 12px;
-  background: #000000;
+  width: 14px !important;
+  height: 14px !important;
+  background: #000000 !important;
+  border-radius: 0 !important;
+  cursor: pointer !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 2px;
+  background: #C6C6C6;
   border-radius: 0;
-  cursor: pointer;
-  border: none;
-  box-shadow: none;
 }
 
 /* Ghost border utility */

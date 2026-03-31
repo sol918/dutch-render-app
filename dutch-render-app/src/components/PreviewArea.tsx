@@ -6,12 +6,20 @@ import { GeneratedVariant } from "@/types";
 import { LoadingState } from "./LoadingState";
 import { TenderStoryBubble } from "./TenderStoryBubble";
 
+interface RefineComparison {
+  originalUrl: string;
+  refinedUrl: string;
+  variantId: string;
+}
+
 interface PreviewAreaProps {
   selectedVariant: GeneratedVariant | null;
   isGenerating: boolean;
   isRefining: boolean;
   error: string | null;
   onRefine: () => void;
+  refineComparison: RefineComparison | null;
+  onRefineChoice: (choice: "original" | "refined") => void;
 }
 
 function downloadImage(src: string, filename: string) {
@@ -29,6 +37,8 @@ export function PreviewArea({
   isRefining,
   error,
   onRefine,
+  refineComparison,
+  onRefineChoice,
 }: PreviewAreaProps) {
   return (
     <div className="flex-1 overflow-hidden relative bg-[#F9F9F9]">
@@ -103,6 +113,60 @@ export function PreviewArea({
           </div>
         )}
       </div>
+
+      {/* Refine comparison overlay */}
+      <AnimatePresence>
+        {refineComparison && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 bg-[#F9F9F9] z-20 flex flex-col"
+          >
+            <div className="px-6 py-4 text-center">
+              <p className="text-[0.75rem] font-bold text-black/40 uppercase tracking-[0.1em]">
+                Vergelijk origineel en verfijnd
+              </p>
+            </div>
+            <div className="flex-1 flex gap-4 px-6 pb-4 min-h-0">
+              {/* Original */}
+              <div className="flex-1 flex flex-col items-center min-w-0">
+                <div className="flex-1 flex items-center justify-center min-h-0 w-full">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={refineComparison.originalUrl}
+                    alt="Origineel"
+                    className="max-h-full max-w-full object-contain"
+                  />
+                </div>
+                <button
+                  onClick={() => onRefineChoice("original")}
+                  className="mt-3 px-6 py-2.5 text-[0.75rem] font-bold uppercase tracking-[0.1em] bg-white text-black border border-black/10 hover:bg-black/5 transition-all cursor-pointer"
+                >
+                  Behoud origineel
+                </button>
+              </div>
+              {/* Refined */}
+              <div className="flex-1 flex flex-col items-center min-w-0">
+                <div className="flex-1 flex items-center justify-center min-h-0 w-full">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={refineComparison.refinedUrl}
+                    alt="Verfijnd"
+                    className="max-h-full max-w-full object-contain"
+                  />
+                </div>
+                <button
+                  onClick={() => onRefineChoice("refined")}
+                  className="mt-3 px-6 py-2.5 text-[0.75rem] font-bold uppercase tracking-[0.1em] bg-black text-white hover:bg-black/80 transition-all cursor-pointer"
+                >
+                  Gebruik verfijnd
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Loading overlay */}
       <AnimatePresence>

@@ -23,7 +23,7 @@ export function LoadingState({ label }: { label?: string }) {
           transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
           className="text-[0.75rem] text-black/30 uppercase tracking-[0.05em]"
         >
-          Materialisatie van uw ontwerp
+          Even geduld, we maken er iets moois van
         </motion.p>
       </div>
 

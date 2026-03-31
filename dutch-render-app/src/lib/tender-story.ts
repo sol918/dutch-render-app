@@ -113,9 +113,17 @@ function sustainabilityParagraph(config: RenderConfig): string {
 }
 
 function architecturalVisionParagraph(config: RenderConfig): string {
-  const style = STYLE_NAMES[config.style] || config.style;
   const n = config.geometry.numberOfHouses;
   const width = config.geometry.width;
+
+  const styleIntro: Record<string, string> = {
+    "jaren-30": `Een rij van ${n} woningen met de warmte en het karakter van de jaren dertig, maar gebouwd met de kennis van nu.`,
+    modern: `${n} eigentijdse woningen die laten zien dat modern niet koud hoeft te zijn — strak en zelfverzekerd, maar met oog voor menselijke maat.`,
+    landelijk: `${n} houten woningen die voelen alsof ze er thuishoren — warm, ambachtelijk, en in dialoog met het landschap.`,
+    biobased: `${n} woningen die laten zien hoe mooi duurzaam bouwen kan zijn — eerlijke materialen, een groen dak, en een architectuur die bijdraagt in plaats van onttrekt.`,
+  };
+
+  const intro = styleIntro[config.style] || `Een ensemble van ${n} zorgvuldig ontworpen woningen.`;
 
   const crossGableText = config.geometry.crossGables
     ? "De dwarskappen geven het ensemble ritmiek en plasticiteit, en doorbreken de herhaling op een natuurlijke manier."
@@ -125,7 +133,7 @@ function architecturalVisionParagraph(config: RenderConfig): string {
     ? " De subtiele verspringingen in de rooilijn zorgen voor dieptewerking en geven elke woning een eigen adres binnen het geheel."
     : "";
 
-  return `Het plan omvat ${n} woningen in de ${style}-architectuur, elk met een breedte van ${width} meter. ${crossGableText}${steppingText} De woningbreedte biedt ruimte voor een genereuze plattegrond met logische daglichttoetreding en een comfortabele woonbeleving.`;
+  return `${intro} Elke woning is ${width} meter breed — ruim genoeg voor een genereuze plattegrond met logische daglichttoetreding. ${crossGableText}${steppingText}`;
 }
 
 function livingExperienceParagraph(config: RenderConfig): string {

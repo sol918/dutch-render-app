@@ -19,11 +19,11 @@ interface VariantsGalleryProps {
 
 export function configDistance(a: RenderConfig, b: RenderConfig): number {
   let dist = 0;
-  if (a.style !== b.style) dist += 10;
-  if (a.geometry.crossGables !== b.geometry.crossGables) dist += 5;
-  if (a.geometry.stepping !== b.geometry.stepping) dist += 4;
-  dist += Math.abs(a.geometry.numberOfHouses - b.geometry.numberOfHouses) * 0.3;
-  dist += Math.abs(a.geometry.width - b.geometry.width) * 0.2;
+  if (a.style !== b.style) dist += 5;
+  if (a.geometry.crossGables !== b.geometry.crossGables) dist += 3;
+  if (a.geometry.stepping !== b.geometry.stepping) dist += 2;
+  dist += Math.abs(a.geometry.numberOfHouses - b.geometry.numberOfHouses) * 0.5;
+  dist += Math.abs(a.geometry.width - b.geometry.width) * 0.4;
   if (a.gutterType !== b.gutterType) dist += 1;
   if (a.floorLine !== b.floorLine) dist += 1;
   if (a.brickType !== b.brickType) dist += 1;
@@ -160,7 +160,6 @@ export function VariantsGallery({
     return withDistance.map((item) => item.variant);
   }, [allVariants, currentConfig]);
 
-  const recentVariants = useMemo(() => allVariants.slice(-20), [allVariants]);
   const groupedVariants = useMemo(() => groupByProximity([...allVariants]), [allVariants]);
   const selectedVariant = useMemo(
     () => allVariants.find((v) => v.id === selectedVariantId) ?? null,
@@ -187,54 +186,54 @@ export function VariantsGallery({
           </button>
         </div>
 
-        {/* Selected image preview */}
-        {selectedVariant && (
-          <div className="shrink-0 flex items-center justify-center p-4 bg-[#F9F9F9]" style={{ height: "40%" }}>
-            <div className="relative max-h-full overflow-hidden ghost-border">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={selectedVariant.imageUrl}
-                alt="Render"
-                className="max-h-full object-contain"
-                style={{ maxHeight: "calc(40vh - 48px)" }}
-              />
-              {selectedVariant.config && (
-                <TenderStoryBubble config={selectedVariant.config} />
-              )}
-              <button
-                onClick={() => downloadImage(selectedVariant.imageUrl, `vlakwerk-render.png`)}
-                className="absolute bottom-3 right-3 flex items-center gap-2 px-3 py-2 bg-black text-white text-[0.6875rem] font-bold uppercase tracking-[0.1em] hover:bg-black/80 transition-all cursor-pointer"
-              >
-                <Download className="w-3.5 h-3.5" />
-                Download
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Grouped thumbnails grid */}
-        <div className="flex-1 overflow-y-auto px-4 py-3 space-y-6 border-t border-black/5">
-          {groupedVariants.map((group) => (
-            <div key={group.label}>
-              <h4 className="text-[0.6875rem] font-bold text-black/30 uppercase tracking-[0.1em] mb-2">
-                {group.label}
-                <span className="ml-2 text-black/20">({group.variants.length})</span>
-              </h4>
-              <div className="flex gap-2 flex-wrap">
-                {group.variants.map((variant, i) => (
-                  <ThumbnailCard
-                    key={variant.id}
-                    variant={variant}
-                    index={i}
-                    isSelected={variant.id === selectedVariantId}
-                    onSelect={() => onSelectVariant(variant.id)}
-                    onDelete={() => onDeleteVariant(variant.id)}
+            {/* Selected image preview */}
+            {selectedVariant && (
+              <div className="shrink-0 flex items-center justify-center p-4 bg-[#F9F9F9]" style={{ height: "40%" }}>
+                <div className="relative max-h-full overflow-hidden ghost-border">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={selectedVariant.imageUrl}
+                    alt="Render"
+                    className="max-h-full object-contain"
+                    style={{ maxHeight: "calc(40vh - 48px)" }}
                   />
-                ))}
+                  {selectedVariant.config && (
+                    <TenderStoryBubble config={selectedVariant.config} />
+                  )}
+                  <button
+                    onClick={() => downloadImage(selectedVariant.imageUrl, `vlakwerk-render.png`)}
+                    className="absolute bottom-3 right-3 flex items-center gap-2 px-3 py-2 bg-black text-white text-[0.6875rem] font-bold uppercase tracking-[0.1em] hover:bg-black/80 transition-all cursor-pointer"
+                  >
+                    <Download className="w-3.5 h-3.5" />
+                    Download
+                  </button>
+                </div>
               </div>
+            )}
+
+            {/* Grouped thumbnails grid */}
+            <div className="flex-1 overflow-y-auto px-4 py-3 space-y-6 border-t border-black/5">
+              {groupedVariants.map((group) => (
+                <div key={group.label}>
+                  <h4 className="text-[0.6875rem] font-bold text-black/30 uppercase tracking-[0.1em] mb-2">
+                    {group.label}
+                    <span className="ml-2 text-black/20">({group.variants.length})</span>
+                  </h4>
+                  <div className="flex gap-2 flex-wrap">
+                    {group.variants.map((variant, i) => (
+                      <ThumbnailCard
+                        key={variant.id}
+                        variant={variant}
+                        index={i}
+                        isSelected={variant.id === selectedVariantId}
+                        onSelect={() => onSelectVariant(variant.id)}
+                        onDelete={() => onDeleteVariant(variant.id)}
+                      />
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
       </div>
     );
   }
@@ -252,7 +251,7 @@ export function VariantsGallery({
             onClick={onToggleExpanded}
             className="flex items-center gap-1 text-[0.6875rem] text-black/40 hover:text-black/70 transition-colors cursor-pointer uppercase tracking-[0.05em] font-medium"
           >
-            Alle {allVariants.length} tonen
+            Alle {allVariants.length}
             <ChevronUp className="w-3.5 h-3.5" />
           </button>
         )}
